@@ -1,0 +1,45 @@
+import {Link} from "react-router-dom";
+import {useState} from "react";
+
+export default function Sidebar() {
+
+    const [activeItem, setActiveItem] = useState("dashboard");
+
+    const getItemClasses = (item:string) =>
+        activeItem === item
+            ? "w-12 rounded-[7px] bg-[#011f4b] text-white text-12p px-4 py-2 hover:bg-[#003766]"
+            : "w-12 rounded-[7px] px-4 py-2 hover:bg-gray-200 text-12p";
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+    return (
+        <>
+            <img src="src/assets/icon.png" alt="" className="w-full h-32 object-cover rounded-"/>
+            <nav>
+                <ul>
+                    <li><Link to="/" className={`${getItemClasses("dashboard")} block h-full w-full`} onClick={() => setActiveItem("dashboard")}>Dashboard</Link></li>
+                    <li><Link to="/activity" className={`${getItemClasses("activity")} block h-full w-full`} onClick={() => setActiveItem("activity")}>Activity</Link></li>
+                    <li className="rounded">
+                        <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="block w-full text-left py-2 px-4 rounded">Management
+                            <span className="float-right">
+                                {isDropdownOpen ? "▲" : "▼"}
+                            </span>
+                        </button>
+                        {isDropdownOpen && (
+                            <ul className={` left-full mt-2 w-48 item-expand ${
+                                isDropdownOpen ? "max-h-48" : "max-h-0"
+                            }`} >
+                                <li><Link to="/field" className={`${getItemClasses("field")} block h-full w-full`} onClick={() => setActiveItem("field")}>Field</Link></li>
+                                <li><Link to="/crop" className={`${getItemClasses("crop")} block h-full w-full`} onClick={() => setActiveItem("crop")}>Crop</Link></li>
+                                <li><Link to="/staff" className={`${getItemClasses("staff")} block h-full w-full`} onClick={() => setActiveItem("staff")}>Staff</Link></li>
+                            </ul>
+                        )}
+                    </li>
+                    <li><Link to="/reports" className={`${getItemClasses("reports")} block h-full w-full`} onClick={() => setActiveItem("reports")}>Reports</Link></li>
+                    <li><Link to="/insights" className={`${getItemClasses("insight")} block h-full w-full`} onClick={() => setActiveItem("insight")}>Insights</Link></li>
+                    <li><Link to="/settings" className={`${getItemClasses("setting")} block h-full w-full`} onClick={() => setActiveItem("setting")}>Settings</Link></li>
+                </ul>
+            </nav>
+        </>
+    )
+}
