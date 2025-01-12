@@ -131,3 +131,51 @@ body {
 .custom-layout {
     @apply border bg-white rounded-lg p-3;
 }
+
+.crop-container {
+    @apply flex gap-2;
+}
+
+.crop-list {
+    @apply w-4/6 flex flex-col gap-4;
+}
+
+.crop-graphs {
+    @apply w-2/6;
+}
+
+.crop-list-header-title {
+    @apply flex gap-4;
+}
+
+.crop-list-title {
+    @apply text-4xl font-semibold text-dimgrey;
+}
+
+.custom-persist-btn {
+    @apply bg-white border-2 border-gray-300 rounded-md px-2 py-2 font-semibold text-dimgrey;
+}
+
+.crop-list-sub-title {
+    @apply text-dimgrey;
+}
+
+.crop-list-body {
+    @apply h-6/7 overflow-hidden;
+}
+
+.crop-list-items {
+    @apply mt-1 flex flex-wrap overflow-y-auto max-h-screen gap-x-16 gap-y-3 px-4;
+}
+
+.custom-searchbar {
+    @apply border rounded-full w-2/6 h-11 flex pl-3;
+}
+
+.search-input {
+    @apply rounded-full;
+}
+
+.search-btn {
+    @apply w-9 rounded-full pl-1;
+}
