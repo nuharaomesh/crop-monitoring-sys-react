@@ -8,7 +8,8 @@ export default {
     extend: {
       height: {
         '96': '58rem',
-        '55': '54.5rem'
+        '55': '54.5rem',
+        '6/7': '90%'
       },
       width: {
         '20%': '13%'
@@ -25,6 +26,7 @@ export default {
       },
       colors: {
         customGray: '#7d7d7d',
+        dimgrey: 'dimgrey'
       },
       padding: {
         '14p': '14px'
