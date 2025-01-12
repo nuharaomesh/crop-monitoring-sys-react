@@ -4,15 +4,16 @@ import MainLayout from "./components/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Activity from "./pages/Activity.tsx";
 import Field from "./pages/Field.tsx";
-import Crop from "./pages/Crop.tsx";
+import Crop from "./pages/Crop/Crop.tsx";
 import Staff from "./pages/Staff.tsx";
 import Reports from "./pages/Reports.tsx";
 import Insights from "./pages/Insights.tsx";
 import Settings from "./pages/Settings.tsx";
 import CultivateForm from "./components/Cultivate/CultivateForm.tsx";
 import FieldForm from "./components/Field/FieldForm.tsx";
-import CropForm from "./components/Crop/CropForm.tsx";
 import StaffForm from "./components/Staff/StaffForm.tsx";
+import AddCrop from "./pages/Crop/AddCrop.tsx";
+import UpdateCrop from "./pages/Crop/UpdateCrop.tsx";
 
 function App() {
 
@@ -32,8 +33,8 @@ function App() {
                     ]
                 },
                 { path: '/crop', element: <Crop/>, children: [
-                        { path: '/crop/addCrop', element: <CropForm/> },
-                        { path: '/crop/updateCrop', element: <CropForm/> }
+                        { path: '/crop/addCrop', element: <AddCrop/> },
+                        { path: '/crop/updateCrop', element: <UpdateCrop/> }
                     ]
                 },
                 { path: '/staff', element: <Staff/>, children: [
