@@ -6,6 +6,10 @@ body {
     @apply font-sans;
 }
 
+.main-content-holder {
+    @apply flex p-3 bg-slate-200;
+}
+
 /*item model styles*/
 .modal {
     @apply fixed inset-0 flex items-center justify-center bg-gray-200 z-50;
@@ -68,7 +72,7 @@ body {
 }
 
 .main-border {
-    @apply border rounded-lg mt-2 h-55;
+    @apply mt-2 h-55;
 }
 
 .card-update-btn {
@@ -114,4 +118,16 @@ body {
 
 .crop-card-time {
     @apply font-semibold py-1;
+}
+
+.custom-sidebar {
+    @apply w-20% h-96;
+}
+
+.main-header {
+    @apply w-full h-12;
+}
+
+.custom-layout {
+    @apply border bg-white rounded-lg p-3;
 }

@@ -4,8 +4,8 @@ import Header from "./Header.tsx";
 
 export default function MainLayout() {
     return (
-        <main className="flex p-3">
-            <aside className="w-20% h-96 border rounded-lg p-3">
+        <main className="main-content-holder">
+            <aside className="custom-sidebar custom-layout">
                 <Sidebar/>
             </aside>
             <div className="main-content px-1.5">
