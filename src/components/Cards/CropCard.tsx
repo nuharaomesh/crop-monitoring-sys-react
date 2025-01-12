@@ -4,7 +4,7 @@ export default function CropCard() {
     return (
         <div className="crop-card">
             <div className="crop-card-header">
-                <img src="src/assets/download.jpeg" alt="" className="crop-card-img"/>
+                <img src="../../../public/download.jpeg" alt="" className="crop-card-img"/>
                 <button className="card-update-btn crop-update-btn-pos"><BsFillPenFill color="green" size="18" /></button>
             </div>
             <div className="crop-card-body">

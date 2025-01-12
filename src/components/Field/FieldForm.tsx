@@ -34,7 +34,7 @@ export default function FieldForm() {
                             {imagePreview ? (
                                 <img src={imagePreview} alt="Added Field" className="item-image"/>
                             ) : (
-                                <img src="/src/assets/images.png" alt="Added Field" id="addedFieldImg" className="item-image"/>
+                                <img src="/images.png" alt="Added Field" id="addedFieldImg" className="item-image"/>
                             )}
                         </div>
                         <div>

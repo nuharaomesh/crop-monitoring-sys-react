@@ -25,7 +25,7 @@ export default function CropForm() {
                             {imagePreview ? (
                                 <img src={imagePreview} alt="Crop Preview" className="item-image"/>
                             ) : (
-                                <img src="src/assets/images.png" alt="Crop Image" className="item-image"/>
+                                <img src="../../../public/images.png" alt="Crop Image" className="item-image"/>
                             )}
                         </div>
                         <div>

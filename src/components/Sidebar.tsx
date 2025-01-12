@@ -14,7 +14,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <img src="src/assets/icon.png" alt="" className="w-full h-32 object-cover rounded-"/>
+            <img src="../../public/icon.png" alt="" className="w-full h-32 object-cover rounded-"/>
             <nav>
                 <ul>
                     <li><Link to="/" className={`${getItemClasses("dashboard")} block h-full w-full`} onClick={() => setActiveItem("dashboard")}>Dashboard</Link></li>
