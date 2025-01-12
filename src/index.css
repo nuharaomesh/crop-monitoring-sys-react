@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-sans;
+}
+
+/*item model styles*/
+.modal {
+    @apply fixed inset-0 flex items-center justify-center bg-gray-200 z-50;
+}
+
+.modal-content {
+    @apply bg-white rounded-lg p-6 shadow-lg w-full max-w-lg;
+}
+
+.modal-header {
+    @apply flex justify-between items-center border-b pb-2 mb-4;
+}
+
+.modal-title {
+    @apply text-lg font-semibold;
+}
+
+.modal-body {
+    @apply  p-4 overflow-y-auto max-h-[70vh];
+}
+
+.item-image {
+    @apply w-3/4 h-3/5 object-cover rounded;
+}
+
+.modal-footer {
+    @apply flex justify-end space-x-2 pt-4 border-t;
+}
+
+.form-label {
+    @apply text-sm font-medium text-gray-700;
+}
+
+.form-control {
+    @apply w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.file-input {
+    @apply file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-200 file:text-sm file:font-semibold;
+}
+
+.save-button {
+    @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600;
+}
+
+.cancel-button {
+    @apply bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600;
+}
+
+.field-map {
+    @apply w-full h-[300px] border border-gray-300 rounded-lg;
+}
+
+.item-expand {
+    @apply overflow-hidden transition-all duration-300 ease-in-out;
+}
+
+.main-content {
+    @apply w-full;
+}
+
+.main-border {
+    @apply border rounded-lg mt-2 h-55;
+}
+
+.card-update-btn {
+    @apply w-12 h-12 p-14p rounded-full bg-green-200;
+}
+
+.card-label {
+    @apply text-sm font-semibold text-customGray;
+}
+
+.card-title {
+    @apply text-2xl font-semibold;
+}
+
+.card-sub-title {
+    @apply text-sm;
+}
+
+/*Crop card styles*/
+.crop-card {
+    @apply w-72;
+}
+
+.season-title {
+    @apply font-semibold py-1 px-2 rounded-lg bg-orange-200 text-amber-950;
+}
+
+.crop-card-header {
+    @apply flex;
+}
+
+.crop-update-btn-pos {
+    @apply self-end relative -left-16;
+}
+
+.crop-card-img {
+    @apply w-52 h-52 rounded-full border-4 border-green-200;
+}
+
+.crop-card-body {
+    @apply border -mt-32 pt-36 rounded-custom px-3 pb-3;
+}
+
+.crop-card-time {
+    @apply font-semibold py-1;
+}
