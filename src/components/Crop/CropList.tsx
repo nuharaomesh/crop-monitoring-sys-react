@@ -1,8 +1,12 @@
 import CropCard from "../Cards/CropCard.tsx";
 import { BsSearch } from "react-icons/bs";
 import {Link, Outlet} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 export default function CropList() {
+
+    const crops = useSelector(state => state.crop)
+
     return (
         <section className="custom-layout crop-list">
             <div className="crop-list-header">
@@ -20,7 +24,16 @@ export default function CropList() {
                     </form>
                 </div>
                 <div className="crop-list-items">
-                    <CropCard/>
+                    {crops.map(crop => (
+                        <CropCard key={crop.cropCode}
+                                  cropImg={crop.cropImg}
+                                  cropName={crop.cropName}
+                                  cropScientificName={crop.cropScientificName}
+                                  category={crop.category}
+                                  cropSeason={crop.cropSeason}
+                                  cropGrowthTime={crop.cropGrowthTime}
+                        />
+                    ))}
                 </div>
             </div>
             <Outlet/>
