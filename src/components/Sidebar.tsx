@@ -7,8 +7,8 @@ export default function Sidebar() {
 
     const getItemClasses = (item:string) =>
         activeItem === item
-            ? "w-12 rounded-[7px] bg-[#011f4b] text-white text-12p px-4 py-2 hover:bg-[#003766]"
-            : "w-12 rounded-[7px] px-4 py-2 hover:bg-gray-200 text-12p";
+            ? "w-12 rounded-[7px] bg-[#011f4b] text-white text-12p px-4 py-2 hover:bg-[#003766] font-semibold"
+            : "w-12 rounded-[7px] px-4 py-2 hover:bg-gray-200 text-12p font-semibold text-slate-700";
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
@@ -20,7 +20,7 @@ export default function Sidebar() {
                     <li><Link to="/" className={`${getItemClasses("dashboard")} block h-full w-full`} onClick={() => setActiveItem("dashboard")}>Dashboard</Link></li>
                     <li><Link to="/activity" className={`${getItemClasses("activity")} block h-full w-full`} onClick={() => setActiveItem("activity")}>Activity</Link></li>
                     <li className="rounded">
-                        <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="block w-full text-left py-2 px-4 rounded">Management
+                        <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="block w-full text-left py-2 px-4 rounded font-semibold text-slate-700">Management
                             <span className="float-right">
                                 {isDropdownOpen ? "▲" : "▼"}
                             </span>
