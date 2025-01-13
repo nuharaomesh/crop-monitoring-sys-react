@@ -26,6 +26,7 @@ export default function CropList() {
                 <div className="crop-list-items">
                     {crops.map(crop => (
                         <CropCard key={crop.cropCode}
+                                  cropCode={crop.cropCode}
                                   cropImg={crop.cropImg}
                                   cropName={crop.cropName}
                                   cropScientificName={crop.cropScientificName}
