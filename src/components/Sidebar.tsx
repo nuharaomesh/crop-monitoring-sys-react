@@ -7,8 +7,8 @@ export default function Sidebar() {
 
     const getItemClasses = (item:string) =>
         activeItem === item
-            ? "w-12 rounded-[7px] bg-[#011f4b] text-white text-12p px-4 py-2 hover:bg-[#003766] font-semibold"
-            : "w-12 rounded-[7px] px-4 py-2 hover:bg-gray-200 text-12p font-semibold text-slate-700";
+            ? "w-12 rounded-[4px] bg-[#011f4b] text-white text-12p px-4 py-2 hover:bg-[#003766] font-semibold"
+            : "w-12 rounded-[4px] px-4 py-2 hover:bg-gray-200 text-12p font-semibold text-slate-700";
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
