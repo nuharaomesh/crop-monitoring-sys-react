@@ -177,7 +177,7 @@ body {
 }
 
 .custom-searchbar {
-    @apply border rounded-full w-2/6 h-11 flex pl-3;
+    @apply border rounded-full w-2/4 h-11 flex pl-3;
 }
 
 .search-input {
@@ -208,3 +208,10 @@ body {
     @apply h-1/2;
 }
 
+.staff-list-items {
+    @apply w-full h-5/6 overflow-auto;
+}
+
+.staff-card {
+    @apply flex items-center bg-white p-2 shadow-sm rounded-lg hover:bg-gray-100 transition-colors duration-300 space-x-4;
+}
