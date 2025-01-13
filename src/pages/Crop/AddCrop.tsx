@@ -10,7 +10,6 @@ export default function AddCrop() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const [cropCode, setCropCode] = useState('')
     const [cropName, setCropName] = useState('')
     const [cropScientificName, setCropScientificName] = useState('')
     const [cropImage, setCropImage] = useState<string | null>(null);
@@ -20,21 +19,21 @@ export default function AddCrop() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        setCropCode(`${Date.now()}-${Math.random().toString(36).substr(2, 9)}`)
-        console.log(cropCode)
-        const newCrop = new Crop(cropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
+        const genCropCode = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        const newCrop = new Crop(genCropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
         dispatch(add_crop({...newCrop}))
         navigate('/crop')
     }
 
-    function handleCancel() {
+    function handleCancel(event: React.SyntheticEvent) {
+        event.preventDefault()
         navigate('/crop')
     }
 
     return (
         <>
             <CropForm handleSubmit={handleSubmit}
-                      handleCancle={handleCancel}
+                      handleCancel={handleCancel}
                       title="Add your new Crop"
                       setCropName={setCropName}
                       setCropScientificName={setCropScientificName}
