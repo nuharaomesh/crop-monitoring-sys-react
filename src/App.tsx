@@ -34,12 +34,12 @@ function App() {
                 },
                 { path: '/crop', element: <Crop/>, children: [
                         { path: '/crop/addCrop', element: <AddCrop/> },
-                        { path: '/crop/updateCrop', element: <UpdateCrop/> }
+                        { path: '/crop/updateCrop/:id', element: <UpdateCrop/> }
                     ]
                 },
                 { path: '/staff', element: <Staff/>, children: [
                         { path: '/staff/addStaff', element: <StaffForm/> },
-                        { path: '/staff/updateStaff', element: <StaffForm/> }
+                        { path: '/staff/updateStaff/:id', element: <StaffForm/> }
                     ]
                 },
                 { path: '/Reports', element: <Reports/> },
