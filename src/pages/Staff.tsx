@@ -1,4 +1,6 @@
 import StaffList from "../components/Staff/StaffList.tsx";
+import VehicleList from "../components/Vehicle/VehicleList.tsx";
+import EquipmentList from "../components/Equipment/EquipmentList.tsx";
 
 export default function Staff() {
     return (
@@ -11,10 +13,10 @@ export default function Staff() {
             </div>
             <div className="staff-container-right">
                 <div className="vehicle-holder custom-layout">
-
+                    <VehicleList/>
                 </div>
                 <div className="equipment-holder custom-layout">
-
+                    <EquipmentList/>
                 </div>
             </div>
         </section>
