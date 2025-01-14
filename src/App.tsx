@@ -3,17 +3,18 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import MainLayout from "./components/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Activity from "./pages/Activity.tsx";
-import Field from "./pages/Field.tsx";
+import Field from "./pages/Field/Field.tsx";
 import Crop from "./pages/Crop/Crop.tsx";
 import Staff from "./pages/Staff.tsx";
 import Reports from "./pages/Reports.tsx";
 import Insights from "./pages/Insights.tsx";
 import Settings from "./pages/Settings.tsx";
 import CultivateForm from "./components/Cultivate/CultivateForm.tsx";
-import FieldForm from "./components/Field/FieldForm.tsx";
 import StaffForm from "./components/Staff/StaffForm.tsx";
 import AddCrop from "./pages/Crop/AddCrop.tsx";
 import UpdateCrop from "./pages/Crop/UpdateCrop.tsx";
+import AddField from "./pages/Field/AddField.tsx";
+import UpdateField from "./pages/Field/UpdateField.tsx";
 
 function App() {
 
@@ -28,8 +29,8 @@ function App() {
                     ]
                 },
                 { path: '/field', element: <Field/>, children: [
-                        { path: '/field/addField', element: <FieldForm/> },
-                        { path: '/field/updateField', element: <FieldForm/> }
+                        { path: '/field/addField', element: <AddField/> },
+                        { path: '/field/updateField', element: <UpdateField/> }
                     ]
                 },
                 { path: '/crop', element: <Crop/>, children: [
