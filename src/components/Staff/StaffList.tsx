@@ -16,7 +16,7 @@ export default function StaffList() {
                 <div className="staff-searchbar">
                     <Searchbar/>
                 </div>
-                <div className="staff-list-items">
+                <div className="list-items staff-list-h">
                     <StaffCard/>
                 </div>
             </div>

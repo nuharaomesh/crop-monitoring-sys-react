@@ -3,15 +3,13 @@ export class Field {
     fieldName: string
     fieldLocation: string
     fieldSize: string
-    fieldImg1: string
-    fieldImg2: string
+    fieldImg: string | null
 
-    constructor(fieldCode: string, fieldName: string, fieldLocation: string, fieldSize: string, fieldImg1: string, fieldImg2: string) {
+    constructor(fieldCode: string, fieldName: string, fieldLocation: string, fieldSize: string, fieldImg: string | null) {
         this.fieldCode = fieldCode
         this.fieldName = fieldName
         this.fieldLocation = fieldLocation
         this.fieldSize = fieldSize
-        this.fieldImg1 = fieldImg1
-        this.fieldImg2 = fieldImg2
+        this.fieldImg = fieldImg
     }
 }
