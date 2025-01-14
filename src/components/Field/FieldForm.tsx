@@ -1,7 +1,7 @@
 import {useState} from "react";
 import FieldMap from "../FieldMap.tsx";
 
-export default function FieldForm() {
+export default function FieldForm(props) {
 
     const [lat, setLat] = useState(6.9271);
     const [lng, setLng] = useState(79.8612);
@@ -10,6 +10,8 @@ export default function FieldForm() {
         console.log('New location:', newLat, newLng);
         setLat(newLat);
         setLng(newLng);
+        props.setLatitude(newLat)
+        props.setLongitude(newLng)
     }
 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -27,7 +29,7 @@ export default function FieldForm() {
             <form action="" className="form-border">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title">Add a new field</h1>
+                        <h1 className="modal-title">{props.title}</h1>
                     </div>
                     <div className="modal-body">
                         <div className="flex justify-center">
@@ -41,7 +43,9 @@ export default function FieldForm() {
                             <div className="form-group">
                             <label htmlFor="field_name" className="form-label">Field name</label>
                                 <input type="text" id="field_name" className="form-control"
-                                       placeholder="Enter your field name"/>
+                                       placeholder="Enter your field name"
+                                       onChange={(e) => props.setFieldName(e.target.value)}
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="field_image" className="form-label">Choose field image</label>
@@ -50,7 +54,9 @@ export default function FieldForm() {
                             <div className="form-group">
                                 <label htmlFor="field_size" className="form-label">Field size</label>
                                 <input type="text" id="field_size" className="form-control"
-                                       placeholder="Size of field"/>
+                                       placeholder="Size of field"
+                                       onChange={(e) => props.setFieldSize(e.target.value)}
+                                />
                             </div>
                         </div>
                         <div className="mt-6">
@@ -69,8 +75,8 @@ export default function FieldForm() {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="cancel-button">Cancel</button>
-                        <button className="save-button">Save</button>
+                        <button onClick={props.handleCancel} className="cancel-button">Cancel</button>
+                        <button onClick={props.handleSubmit} className="save-button">{props.children}</button>
                     </div>
                 </div>
             </form>
