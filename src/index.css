@@ -227,3 +227,43 @@ body {
 .staff-card, .vehicle-card, .equipment-card {
     @apply flex items-center bg-white p-2 shadow-sm rounded-lg hover:bg-gray-100 transition-colors duration-300 space-x-4;
 }
+
+.field-container {
+    @apply flex flex-col gap-2;
+}
+
+.field-container-header {
+    @apply h-1/4;
+}
+
+.field-container-body {
+    @apply h-3/4 flex;
+}
+
+.field-list-holder {
+    @apply border border-orange-300 w-1/2 flex flex-col;
+}
+
+.field-list-header {
+    @apply border-2 border-blue-500 h-1/5 p-2;
+}
+
+.field-list-items {
+    @apply border-2 border-red-500 h-4/5 p-2;
+}
+
+.field-list-title {
+    @apply mb-1
+}
+
+.field-map-holder {
+    @apply border border-red-300 w-1/2
+}
+
+.field-title {
+    @apply text-3xl font-semibold text-dimgrey;
+}
+
+.field-sub-title {
+    @apply text-dimgrey;
+}
