@@ -6,6 +6,10 @@ body {
     @apply font-sans;
 }
 
+.custom-border {
+    @apply border-2 border-red-400
+}
+
 .main-content-holder {
     @apply flex p-3 bg-slate-200;
 }
@@ -60,7 +64,7 @@ body {
 }
 
 .field-map {
-    @apply w-full h-[300px] border border-gray-300 rounded-lg;
+    @apply w-full h-full border border-gray-300 rounded-lg;
 }
 
 .item-expand {
@@ -237,19 +241,19 @@ body {
 }
 
 .field-container-body {
-    @apply h-3/4 flex;
+    @apply h-3/4 flex gap-2;
 }
 
 .field-list-holder {
-    @apply border border-orange-300 w-1/2 flex flex-col;
+    @apply w-1/2 flex flex-col;
 }
 
 .field-list-header {
-    @apply border-2 border-blue-500 h-1/5 p-2;
+    @apply h-1/5 p-2;
 }
 
 .field-list-items {
-    @apply border-2 border-red-500 h-4/5 p-2;
+    @apply h-4/5 p-2;
 }
 
 .field-list-title {
@@ -257,7 +261,7 @@ body {
 }
 
 .field-map-holder {
-    @apply border border-red-300 w-1/2
+    @apply w-1/2;
 }
 
 .field-title {
@@ -266,4 +270,120 @@ body {
 
 .field-sub-title {
     @apply text-dimgrey;
+}
+
+.dashboard-container {
+    @apply flex flex-row gap-2;
+}
+
+.dashboard-left {
+    @apply flex flex-col w-4/6 gap-2;
+}
+
+.dashboard-right {
+    @apply w-2/6 flex flex-col gap-2;
+}
+
+.graph-and-progress {
+    @apply flex h-2/5 gap-2;
+}
+
+.dashboard-task {
+    @apply h-3/5
+}
+
+.dashboard-graph {
+    @apply w-2/3
+}
+
+.field-progress {
+    @apply w-1/3
+}
+
+.dashboard-calender {
+    @apply h-4/6
+}
+
+.business-progress {
+    @apply h-1/3;
+}
+
+.dashboard-right-bottom {
+    @apply h-3/6 flex gap-2;
+}
+
+.monthly-task {
+    @apply w-1/2
+}
+
+.blank {
+    @apply w-1/2
+}
+
+.field-card {
+    @apply h-44 border rounded-lg bg-white w-full flex p-2;
+}
+
+.field-card-header {
+    @apply w-1/4 rounded-sm overflow-hidden;
+}
+
+.field-card-img {
+    @apply w-full h-full object-cover;
+}
+
+.field-card-body {
+    @apply w-2/4 pl-1;
+}
+
+.field-card-footer {
+    @apply w-1/4 p-2;
+}
+
+.custom-card-header {
+    @apply font-semibold text-gray-800 text-2xl;
+}
+
+.custom-card-header-md {
+    @apply font-semibold text-gray-400 text-xl;
+}
+
+.field-card-location {
+    @apply font-semibold text-gray-700 text-lg;
+}
+
+.field-card-crop-name {
+    @apply bg-green-500 py-1 px-2 w-fit rounded-sm text-white font-semibold text-sm;
+}
+
+.field-card-harvest-stat {
+    @apply font-semibold text-base text-green-700;
+}
+
+.field-card-uncultivated {
+    @apply font-semibold text-yellow-600 text-lg;
+}
+
+.field-card-footer-top {
+    @apply flex h-1/2;
+}
+
+.field-card-footer-bottom {
+    @apply h-1/2 flex items-center justify-center;
+}
+
+.field-update-btn {
+    @apply block;
+}
+
+.field-card-staff-count, .field-card-equipment-count {
+    @apply w-1/2 flex flex-col;
+}
+
+.field-card-counts {
+    @apply text-2xl font-bold text-gray-600 mt-1 self-center;
+}
+
+.field-map-container {
+    @apply w-full h-[400px]
 }
