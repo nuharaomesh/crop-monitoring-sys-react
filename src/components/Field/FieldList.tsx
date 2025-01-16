@@ -1,7 +1,12 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useLocation} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
+import FieldCard from "../Cards/FieldCard.tsx";
+import FieldMap from "../FieldMap.tsx";
 
 export default function FieldList() {
+
+    const location = useLocation();
+
     return (
         <>
             <div className="field-container-header custom-layout">
@@ -19,13 +24,15 @@ export default function FieldList() {
                         </div>
                         <Searchbar/>
                     </div>
-                    <div className="field-list-items">
-
+                    <div className="field-list-items custom-list-items">
+                        <FieldCard/>
                     </div>
                 </div>
-                <div className="field-map-holder">
-
-                </div>
+                {location.pathname === "/field" && (
+                    <div className="field-map-holder">
+                        <FieldMap initialLat={6.9271} initialLng={79.8612} changeLocation={false}/>
+                    </div>
+                )}
             </div>
             <Outlet/>
         </>
