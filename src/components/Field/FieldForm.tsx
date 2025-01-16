@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import FieldMap from "../FieldMap.tsx";
 
 export default function FieldForm(props) {
@@ -68,8 +68,8 @@ export default function FieldForm(props) {
                                         <i className="fa-solid fa-magnifying-glass"></i>
                                     </button>
                                 </div>
-                                <div id="add_field_map" className="field-map">
-                                    <FieldMap initialLat={lat} initialLng={lng} onLocationChange={handleLocationChange}/>
+                                <div id="add_field_map" className="field-map-container">
+                                    <FieldMap initialLat={lat} initialLng={lng} onLocationChange={handleLocationChange} changeLocation={true}/>
                                 </div>
                             </div>
                         </div>
