@@ -1,0 +1,48 @@
+import FieldForm from "../../components/Field/FieldForm.tsx";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import React, {useState} from "react";
+import {Field} from "../../models/Field.ts";
+import {add_field} from "../../reducers/FieldSlice.ts";
+import GenerateID from "../../util/GenerateID.ts";
+
+export default function AddField() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const [fieldName, setFieldName] = useState('')
+    const [latitude, setLatitude] = useState(0)
+    const [longitude, setLongitude] = useState(0)
+    const [fieldSize, setFieldSize] = useState('')
+    const [fieldImg, setFieldImg] = useState<string | null>(null)
+
+    function handleSubmit(event: React.SyntheticEvent) {
+        event.preventDefault()
+        const genFieldCode = GenerateID("FIELD")
+        const fieldLocation = `${latitude}, ${longitude}`
+        const newField = new Field(genFieldCode, fieldName, fieldLocation.toString(), fieldSize, fieldImg)
+        dispatch(add_field({...newField}))
+        navigate('/field')
+    }
+
+    function handleCancel(event: React.SyntheticEvent) {
+        event.preventDefault()
+        navigate('/field')
+    }
+
+    return (
+        <>
+            <FieldForm
+                handleCancel={handleCancel}
+                handleSubmit={handleSubmit}
+                setFieldName={setFieldName}
+                setLatitude={setLatitude}
+                setLongitude={setLongitude}
+                setFieldSize={setFieldSize}
+                setFieldImg={setFieldImg}
+                title="Add a new Field"
+            >Save field</FieldForm>
+        </>
+    )
+}
