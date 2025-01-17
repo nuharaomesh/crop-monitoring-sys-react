@@ -79,6 +79,11 @@ export default function FieldForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
+                            :
+                            ""
+                        }
                         <button onClick={props.handleCancel} className="cancel-button">Cancel</button>
                         <button onClick={props.handleSubmit} className="save-button">{props.children}</button>
                     </div>

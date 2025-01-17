@@ -14,7 +14,7 @@ const FieldSlice = createSlice({
             if (field) Object.assign(field, { ...action.payload })
         },
         delete_field: (state, action) => {
-            state.filter(field =>
+            return state.filter(field =>
                 field.fieldCode !== action.payload.fieldCode
             )
         }

@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
 import {Field} from "../../models/Field.ts";
-import {add_field, update_field} from "../../reducers/FieldSlice.ts";
+import {delete_field, update_field} from "../../reducers/FieldSlice.ts";
 
 export default function UpdateField() {
     const navigate = useNavigate()
@@ -33,6 +33,12 @@ export default function UpdateField() {
         navigate('/field')
     }
 
+    function handleDelete(event: React.SyntheticEvent) {
+        event.preventDefault()
+        dispatch(delete_field({...currentField}))
+        navigate('/field')
+    }
+
     function handleCancel(event: React.SyntheticEvent) {
         event.preventDefault()
         navigate('/field')
@@ -43,6 +49,7 @@ export default function UpdateField() {
             <FieldForm
                 handleCancel={handleCancel}
                 handleSubmit={handleSubmit}
+                handleDelete={handleDelete}
                 setFieldName={setFieldName}
                 setFieldAddress={setFieldAddress}
                 setLatitude={setLatitude}
