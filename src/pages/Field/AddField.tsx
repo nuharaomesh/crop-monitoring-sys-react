@@ -12,16 +12,18 @@ export default function AddField() {
     const dispatch = useDispatch()
 
     const [fieldName, setFieldName] = useState('')
+    const [fieldAddress, setFieldAddress] = useState('')
     const [latitude, setLatitude] = useState(0)
     const [longitude, setLongitude] = useState(0)
     const [fieldSize, setFieldSize] = useState('')
     const [fieldImg, setFieldImg] = useState<string | null>(null)
+    const [isCultivated, setIsCultivated] = useState(false)
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         const genFieldCode = GenerateID("FIELD")
         const fieldLocation = `${latitude}, ${longitude}`
-        const newField = new Field(genFieldCode, fieldName, fieldLocation.toString(), fieldSize, fieldImg)
+        const newField = new Field(genFieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
         dispatch(add_field({...newField}))
         navigate('/field')
     }
@@ -37,6 +39,7 @@ export default function AddField() {
                 handleCancel={handleCancel}
                 handleSubmit={handleSubmit}
                 setFieldName={setFieldName}
+                setFieldAddress={setFieldAddress}
                 setLatitude={setLatitude}
                 setLongitude={setLongitude}
                 setFieldSize={setFieldSize}
