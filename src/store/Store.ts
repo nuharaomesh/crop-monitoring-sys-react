@@ -4,6 +4,7 @@ import FieldSlice from "../reducers/FieldSlice.ts";
 import CultivatedSlice from "../reducers/CultivatedSlice.ts";
 import StaffSlice from "../reducers/StaffSlice.ts";
 import VehicleSlice from "../reducers/VehicleSlice.ts";
+import EquipmentSlice from "../reducers/EquipmentSlice.ts";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         field: FieldSlice,
         cultivate: CultivatedSlice,
         staff: StaffSlice,
-        vehicle: VehicleSlice
+        vehicle: VehicleSlice,
+        equipment: EquipmentSlice
     }
 })
