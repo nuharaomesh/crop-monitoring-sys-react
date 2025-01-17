@@ -12,7 +12,7 @@ export default function FieldCard(props) {
     return (
         <div className="field-card" onClick={handleClick}>
             <div className="field-card-header">
-                <img src="../../../public/download.jpeg" alt="" className="field-card-img"/>
+                <img src={props.fieldImg} alt="" className="field-card-img"/>
             </div>
             <div className="field-card-body">
                 <h1 className="custom-card-header">{props.fieldName}</h1>
@@ -45,7 +45,7 @@ export default function FieldCard(props) {
                     )}
                 </div>
                 <div className="field-card-footer-bottom">
-                    <Link to="" className="card-update-btn field-update-btn"><BsFillPenFill color="green" size="18"/></Link>
+                    <Link to={`/field/updateField/${props.fieldCode}`} className="card-update-btn field-update-btn"><BsFillPenFill color="green" size="18"/></Link>
                 </div>
             </div>
         </div>

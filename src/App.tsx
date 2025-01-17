@@ -30,7 +30,7 @@ function App() {
                 },
                 { path: '/field', element: <Field/>, children: [
                         { path: '/field/addField', element: <AddField/> },
-                        { path: '/field/updateField', element: <UpdateField/> }
+                        { path: '/field/updateField/:id', element: <UpdateField/> }
                     ]
                 },
                 { path: '/crop', element: <Crop/>, children: [
