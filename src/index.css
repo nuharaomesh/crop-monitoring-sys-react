@@ -35,8 +35,12 @@ body {
     @apply  p-4 overflow-y-auto max-h-[70vh];
 }
 
+.item-holder {
+    @apply w-80
+}
+
 .item-image {
-    @apply w-3/4 h-3/5 object-cover rounded;
+    @apply w-full h-full object-cover rounded;
 }
 
 .modal-footer {

@@ -1,6 +1,6 @@
-import StaffList from "../components/Staff/StaffList.tsx";
-import VehicleList from "../components/Vehicle/VehicleList.tsx";
-import EquipmentList from "../components/Equipment/EquipmentList.tsx";
+import StaffList from "../../components/Staff/StaffList.tsx";
+import VehicleList from "../../components/Vehicle/VehicleList.tsx";
+import EquipmentList from "../../components/Equipment/EquipmentList.tsx";
 
 export default function Staff() {
     return (

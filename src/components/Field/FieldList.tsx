@@ -43,23 +43,13 @@ export default function FieldList() {
                             <Searchbar/>
                             <div className="flex items-center space-x-4">
                                 <label className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
-                                        name="fieldType"
-                                        value="cultivated"
-                                        className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
-                                        checked={selectedFieldType === "cultivated"}
+                                    <input type="radio" name="fieldType" value="cultivated" className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" checked={selectedFieldType === "cultivated"}
                                         onChange={handleSelectionChange}
                                     />
                                     <span className="text-gray-700">Cultivated</span>
                                 </label>
                                 <label className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
-                                        name="fieldType"
-                                        value="uncultivated"
-                                        className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
-                                        checked={selectedFieldType === "uncultivated"}
+                                    <input type="radio" name="fieldType" value="uncultivated" className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" checked={selectedFieldType === "uncultivated"}
                                         onChange={handleSelectionChange}
                                     />
                                     <span className="text-gray-700">Uncultivated</span>
