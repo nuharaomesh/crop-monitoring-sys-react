@@ -1,8 +1,12 @@
 import {Link, Outlet} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import StaffCard from "../Cards/StaffCard.tsx";
+import {useSelector} from "react-redux";
 
 export default function StaffList() {
+
+    const staffs = useSelector(state => state.staff)
+
     return (
         <section className="staff-list">
             <div className="staff-list-header">
@@ -17,7 +21,16 @@ export default function StaffList() {
                     <Searchbar/>
                 </div>
                 <div className="list-items staff-list-h">
-                    <StaffCard/>
+                    {staffs.map(staff => (
+                        <StaffCard key={staff.staffID}
+                                   img={staff.staffImg}
+                                   name={`${staff.firstname} ${staff.lastname}`}
+                                   role={staff.role}
+                                   stat={staff.status}
+                                   phone={staff.phone}
+                                   email={staff.email}
+                        />
+                    ))}
                 </div>
             </div>
             <Outlet/>
