@@ -176,8 +176,12 @@ body {
     @apply h-21r overflow-hidden;
 }
 
-.custom-list-items {
+.custom-list-cards {
     @apply mt-1 flex flex-wrap overflow-y-auto gap-x-16 gap-y-3 px-4 ;
+}
+
+.custom-list-row {
+    @apply flex flex-col overflow-y-auto gap-2;
 }
 
 .crop-list-items {
@@ -333,7 +337,7 @@ body {
 }
 
 .field-card-body {
-    @apply w-2/4 pl-1;
+    @apply w-2/4 pl-3;
 }
 
 .field-card-footer {
@@ -369,7 +373,7 @@ body {
 }
 
 .field-card-footer-bottom {
-    @apply h-1/2 flex items-center justify-center;
+    @apply h-1/2 flex items-center justify-end;
 }
 
 .field-update-btn {

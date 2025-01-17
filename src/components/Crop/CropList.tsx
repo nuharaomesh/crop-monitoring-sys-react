@@ -21,7 +21,7 @@ export default function CropList() {
                     <div className="crop-searchbar">
                         <Searchbar/>
                     </div>
-                    <div className="crop-list-items custom-list-items">
+                    <div className="crop-list-items custom-list-cards">
                         {crops.map(crop => (
                             <CropCard key={crop.cropCode}
                                       cropCode={crop.cropCode}

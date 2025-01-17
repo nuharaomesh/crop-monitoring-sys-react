@@ -3,15 +3,16 @@ import FieldMap from "../FieldMap.tsx";
 
 export default function FieldForm(props) {
 
-    const [lat, setLat] = useState(6.9271);
-    const [lng, setLng] = useState(79.8612);
+    const [lat, setLat] = useState(6.6755701454919105);
+    const [lng, setLng] = useState(80.16122817993165);
 
-    const handleLocationChange = (newLat: number, newLng: number) => {
-        console.log('New location:', newLat, newLng);
+    const handleLocationChange = (newLat: number, newLng: number, address: string) => {
+        console.log(newLat, newLng)
         setLat(newLat);
         setLng(newLng);
         props.setLatitude(newLat)
         props.setLongitude(newLng)
+        props.setFieldAddress(address)
     }
 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
