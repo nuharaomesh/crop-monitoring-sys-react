@@ -16,6 +16,8 @@ import AddField from "./pages/Field/AddField.tsx";
 import UpdateField from "./pages/Field/UpdateField.tsx";
 import AddStaff from "./pages/Staff/AddStaff.tsx";
 import UpdateStaff from "./pages/Staff/UpdateStaff.tsx";
+import AddVehicle from "./pages/Vehicle/AddVehicle.tsx";
+import UpdateVehicle from "./pages/Vehicle/UpdateVehicle.tsx";
 
 function App() {
 
@@ -41,7 +43,9 @@ function App() {
                 },
                 { path: '/staff', element: <Staff/>, children: [
                         { path: '/staff/addStaff', element: <AddStaff/> },
-                        { path: '/staff/updateStaff/:id', element: <UpdateStaff/> }
+                        { path: '/staff/updateStaff/:id', element: <UpdateStaff/> },
+                        { path: '/staff/addVehicle', element: <AddVehicle/>},
+                        { path: '/staff/updateVehicle/:id', element: <UpdateVehicle/>},
                     ]
                 },
                 { path: '/Reports', element: <Reports/> },
