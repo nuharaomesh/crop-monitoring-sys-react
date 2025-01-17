@@ -403,3 +403,31 @@ body {
 .field-map-container {
     @apply w-full h-[400px]
 }
+
+.activity-container {
+    @apply flex gap-2;
+}
+
+.unCultivated-fields {
+    @apply w-3/5;
+}
+
+.activity-details {
+    @apply w-2/5 flex flex-col gap-2;
+}
+
+.activity-more {
+    @apply h-2/5 flex gap-2;
+}
+
+.cultivated-fields {
+    @apply h-3/5
+}
+
+.blank-2 {
+    @apply w-1/2
+}
+
+.used-props-details {
+    @apply w-1/2
+}
