@@ -1,8 +1,12 @@
 import {Link, Outlet} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import VehicleCard from "../Cards/VehicleCard.tsx";
+import {useSelector} from "react-redux";
 
 export default function VehicleList() {
+
+    const vehicles = useSelector(state => state.vehicle)
+
     return (
         <section className="vehicle-list">
             <div className="vehicle-list-header">
@@ -17,7 +21,15 @@ export default function VehicleList() {
                     <Searchbar/>
                 </div>
                 <div className="list-items vehicle-list-h">
-                    <VehicleCard/>
+                    {vehicles.map(vehicle =>
+                        <VehicleCard key={vehicle.vehicleID}
+                                     vehicleID={vehicle.vehicleID}
+                                     vehicleType={vehicle.category}
+                                     fuelType={vehicle.fuelType}
+                                     status={vehicle.status}
+                                     licenceNumber={vehicle.licencePlate}
+                        />
+                    )}
                 </div>
             </div>
             <Outlet/>

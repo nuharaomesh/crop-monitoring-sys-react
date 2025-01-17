@@ -244,6 +244,10 @@ body {
     @apply flex items-center bg-white p-2 shadow-sm rounded-lg hover:bg-gray-100 transition-colors duration-300 space-x-4;
 }
 
+.vehicle-card, .equipment-card {
+    @apply h-14;
+}
+
 .field-container {
     @apply flex flex-col gap-2;
 }
