@@ -23,6 +23,7 @@ export default function StaffList() {
                 <div className="list-items staff-list-h">
                     {staffs.map(staff => (
                         <StaffCard key={staff.staffID}
+                                   staffID={staff.staffID}
                                    img={staff.staffImg}
                                    name={`${staff.firstname} ${staff.lastname}`}
                                    role={staff.role}

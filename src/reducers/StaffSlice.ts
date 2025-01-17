@@ -14,7 +14,7 @@ const StaffSlice = createSlice({
             if (staff) Object.assign(staff, { ...action.payload })
         },
         delete_staff: (state, action) => {
-            state.filter(staff =>
+            return state.filter(staff =>
                 staff.staffID !== action.payload.staffID
             )
         }

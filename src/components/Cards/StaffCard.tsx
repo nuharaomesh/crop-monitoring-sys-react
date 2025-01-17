@@ -30,7 +30,7 @@ export default function StaffCard(props) {
                     </div>
                 </div>
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
-                    <Link to={`/staff/update/${props.staffID}`}
+                    <Link to={`/staff/updateStaff/${props.staffID}`}
                         className="block bg-green-500 text-white text-sm py-2 px-4 rounded-lg shadow hover:bg-green-600">
                         <BsFillPenFill color="white" size="18" />
                     </Link>

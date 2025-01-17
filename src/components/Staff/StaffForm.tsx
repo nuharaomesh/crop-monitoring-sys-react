@@ -58,6 +58,7 @@ export default function StaffForm(props) {
                                     <input type="radio" name="gender" value="male"
                                            className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
                                            onChange={handleSelectionChange}
+                                           defaultChecked={props.title.startsWith("Update") ? props.staff.gender === "male" : true}
                                     />
                                     <span className="text-gray-700">Male</span>
                                 </label>
@@ -65,6 +66,7 @@ export default function StaffForm(props) {
                                     <input type="radio" name="gender" value="female"
                                            className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
                                            onChange={handleSelectionChange}
+                                           defaultChecked={props.title.startsWith("Update") ? props.staff.gender === "female" : false}
                                     />
                                     <span className="text-gray-700">Female</span>
                                 </label>
@@ -79,12 +81,14 @@ export default function StaffForm(props) {
                             <label htmlFor="dob" className="form-label">Date of birth</label>
                             <input type="date" className="form-control" id="dob"
                                    onChange={(e) => props.setDob(e.target.value)}
+                                   defaultValue={props.title?.startsWith("Update") ? props.staff.dob : props.dob}
                             />
                         </div>
                         <div>
                             <label htmlFor="joined_date" className="form-label">Joined date</label>
                             <input type="date" className="form-control" id="joined_date"
                                    onChange={(e) => props.setJoindeDate(e.target.value)}
+                                   defaultValue={props.title?.startsWith("Update") ? props.staff.joinedDate : props.joinedDate}
                             />
                         </div>
                         <div>
@@ -125,9 +129,13 @@ export default function StaffForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
+                            :
+                            ""
+                        }
                         <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
-                        <button type="button" className="save-button"
-                                onClick={props.handleSubmit}>{props.children}</button>
+                        <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
                     </div>
                 </div>
             </form>
