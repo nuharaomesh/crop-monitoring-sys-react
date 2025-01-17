@@ -5,16 +5,17 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Activity from "./pages/Activity.tsx";
 import Field from "./pages/Field/Field.tsx";
 import Crop from "./pages/Crop/Crop.tsx";
-import Staff from "./pages/Staff.tsx";
+import Staff from "./pages/Staff/Staff.tsx";
 import Reports from "./pages/Reports.tsx";
 import Insights from "./pages/Insights.tsx";
 import Settings from "./pages/Settings.tsx";
 import CultivateForm from "./components/Cultivate/CultivateForm.tsx";
-import StaffForm from "./components/Staff/StaffForm.tsx";
 import AddCrop from "./pages/Crop/AddCrop.tsx";
 import UpdateCrop from "./pages/Crop/UpdateCrop.tsx";
 import AddField from "./pages/Field/AddField.tsx";
 import UpdateField from "./pages/Field/UpdateField.tsx";
+import AddStaff from "./pages/Staff/AddStaff.tsx";
+import UpdateStaff from "./pages/Staff/UpdateStaff.tsx";
 
 function App() {
 
@@ -39,8 +40,8 @@ function App() {
                     ]
                 },
                 { path: '/staff', element: <Staff/>, children: [
-                        { path: '/staff/addStaff', element: <StaffForm/> },
-                        { path: '/staff/updateStaff/:id', element: <StaffForm/> }
+                        { path: '/staff/addStaff', element: <AddStaff/> },
+                        { path: '/staff/updateStaff/:id', element: <UpdateStaff/> }
                     ]
                 },
                 { path: '/Reports', element: <Reports/> },
