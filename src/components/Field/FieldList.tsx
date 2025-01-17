@@ -22,7 +22,7 @@ export default function FieldList() {
     function handleFieldClick(lat: number, lng: number) {
         setMapLat(lat);
         setMapLng(lng);
-    };
+    }
 
     return (
         <>
@@ -72,6 +72,8 @@ export default function FieldList() {
                         {selectedFieldType === "uncultivated" ?
                             (fields.map(field => (
                                 <FieldCard key={field.fieldCode}
+                                           fieldCode={field.fieldCode}
+                                           fieldImg={field.fieldImg}
                                            fieldName={field.fieldName}
                                            fieldSize={field.fieldSize}
                                            fieldAddress={field.fieldAddress}
@@ -82,6 +84,8 @@ export default function FieldList() {
                             ))) :
                             (cultivated.map(cultivate => (
                                 <FieldCard key={cultivate.fieldCode}
+                                           fieldCode={cultivate.fieldCode}
+                                           fieldImg={cultivate.fieldImg}
                                            fieldName={cultivate.fieldName}
                                            fieldSize={cultivate.fieldSize}
                                            fieldAddress={cultivate.fieldAddress}

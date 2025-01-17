@@ -3,11 +3,11 @@ import FieldMap from "../FieldMap.tsx";
 
 export default function FieldForm(props) {
 
-    const [lat, setLat] = useState(6.6755701454919105);
-    const [lng, setLng] = useState(80.16122817993165);
+    const [lat, setLat] = useState(props.title.startsWith("Update") ? props.currentLat : 6.6755701454919105);
+    const [lng, setLng] = useState(props.title.startsWith("Update") ? props.currentLng : 80.16122817993165);
 
     const handleLocationChange = (newLat: number, newLng: number, address: string) => {
-        console.log(newLat, newLng)
+        console.log(address)
         setLat(newLat);
         setLng(newLng);
         props.setLatitude(newLat)
@@ -22,6 +22,7 @@ export default function FieldForm(props) {
         if (file) {
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
+            props.setFieldImg(previewUrl)
         }
     };
 
@@ -37,7 +38,7 @@ export default function FieldForm(props) {
                             {imagePreview ? (
                                 <img src={imagePreview} alt="Added Field" className="item-image"/>
                             ) : (
-                                <img src="/images.png" alt="Added Field" id="addedFieldImg" className="item-image"/>
+                                <img src={props.title?.startsWith("Update") ? props.field.fieldImg : "../../../public/images.png"} alt="Added Field" id="addedFieldImg" className="item-image"/>
                             )}
                         </div>
                         <div>
@@ -46,6 +47,7 @@ export default function FieldForm(props) {
                                 <input type="text" id="field_name" className="form-control"
                                        placeholder="Enter your field name"
                                        onChange={(e) => props.setFieldName(e.target.value)}
+                                       defaultValue={props.title?.startsWith("Update") ? props.field.fieldName : props.fieldName}
                                 />
                             </div>
                             <div className="form-group">
@@ -57,6 +59,7 @@ export default function FieldForm(props) {
                                 <input type="text" id="field_size" className="form-control"
                                        placeholder="Size of field"
                                        onChange={(e) => props.setFieldSize(e.target.value)}
+                                       defaultValue={props.title?.startsWith("Update") ? props.field.fieldSize : props.fieldSize}
                                 />
                             </div>
                         </div>
