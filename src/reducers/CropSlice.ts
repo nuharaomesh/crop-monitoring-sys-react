@@ -14,7 +14,7 @@ const CropSlice = createSlice({
             if (crop) Object.assign(crop, { ...action.payload })
         },
         delete_crop: (state, action) => {
-            state.filter(crop =>
+            return state.filter(crop =>
                 crop.cropCode !== action.payload.cropCode
             )
         }

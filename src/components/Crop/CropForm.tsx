@@ -85,6 +85,11 @@ export default function CropForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
+                            :
+                            ""
+                        }
                         <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
                         <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
                     </div>

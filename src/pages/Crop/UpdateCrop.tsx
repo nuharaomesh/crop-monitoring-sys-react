@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
 import {Crop} from "../../models/Crop.ts";
-import { update_crop } from "../../reducers/CropSlice.ts";
+import {delete_crop, update_crop} from "../../reducers/CropSlice.ts";
 
 export default function UpdateCrop() {
 
@@ -30,6 +30,12 @@ export default function UpdateCrop() {
         navigate('/crop')
     }
 
+    function handleDelete(event: React.SyntheticEvent) {
+        event.preventDefault()
+        dispatch(delete_crop({...currentCrop}))
+        navigate('/crop')
+    }
+
     function handleCancel(event: React.SyntheticEvent) {
         event.preventDefault()
         navigate('/crop')
@@ -39,6 +45,7 @@ export default function UpdateCrop() {
         <>
             <CropForm handleSubmit={handleSubmit}
                       handleCancel={handleCancel}
+                      handleDelete={handleDelete}
                       title="Update your Crop"
                       setCropName={setCropName}
                       setCropScientificName={setCropScientificName}
