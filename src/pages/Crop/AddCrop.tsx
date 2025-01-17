@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import React, {useState} from "react";
 import {Crop} from "../../models/Crop.ts";
 import {add_crop} from "../../reducers/CropSlice.ts";
-import GenerateID from "../../util/GenerateID.ts";
+import generateID from "../../util/GenerateID.ts";
 
 export default function AddCrop() {
 
@@ -20,7 +20,7 @@ export default function AddCrop() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const genCropCode = GenerateID("CROP")
+        const genCropCode = generateID("CROP")
         const newCrop = new Crop(genCropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
         dispatch(add_crop({...newCrop}))
         navigate('/crop')
