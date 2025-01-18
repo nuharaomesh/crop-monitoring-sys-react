@@ -1,8 +1,11 @@
+import UncultivatedFieldList from "../components/Field/UncultivatedFieldList.tsx";
+import {Outlet} from "react-router-dom";
+
 export default function Activity() {
     return (
         <section className="main-border activity-container">
             <div className="unCultivated-fields custom-layout">
-
+                <UncultivatedFieldList/>
             </div>
             <div className="activity-details">
                 <div className="activity-more">
@@ -17,6 +20,7 @@ export default function Activity() {
 
                 </div>
             </div>
+            <Outlet/>
         </section>
     )
 }
