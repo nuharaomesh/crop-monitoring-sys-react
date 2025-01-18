@@ -26,6 +26,7 @@ export default {
       },
       borderRadius: {
         custom: '90px 100px 34px 30px',
+        circle: '50%',
       },
       colors: {
         customGray: '#7d7d7d',
@@ -34,6 +35,9 @@ export default {
       },
       padding: {
         '14p': '14px'
+      },
+      boxShadow: {
+        'custom-circle': '10px 10px 0 white',
       },
     },
   },

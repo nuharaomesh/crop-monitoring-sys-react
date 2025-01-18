@@ -21,7 +21,7 @@ export default function CropCard(props) {
                     className="card-sub-title">( {props.cropScientificName} )</span></h1>
                 <div>
                     <label className="card-label">category</label>
-                    <h1 className="font-semibold text-green-600 text-20p">{props.category}</h1>
+                    <h1 className="crop-card-cat">{props.category}</h1>
                 </div>
                 <div className="flex gap-4">
                     <div>
