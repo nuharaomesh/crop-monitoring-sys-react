@@ -14,13 +14,22 @@ body {
     @apply flex p-3 bg-slate-200;
 }
 
+.modal-animation {
+    @apply transition-all duration-500 ease-in-out transform;
+
+}
+
 /*item model styles*/
 .modal {
-    @apply fixed inset-0 flex items-center justify-center bg-gray-200 z-50;
+    @apply fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-gray-400/25 transition-transform ease-out;
 }
 
 .modal-content {
     @apply bg-white rounded-lg p-6 shadow-lg w-full max-w-lg;
+}
+
+.cultivate-modal-content {
+    @apply !max-w-full h-full;
 }
 
 .modal-header {
@@ -120,8 +129,12 @@ body {
     @apply self-end relative -left-16;
 }
 
+.crop-card-img-holder {
+    @apply w-52 h-52 rounded-full border-4 border-green-200 overflow-hidden;
+}
+
 .crop-card-img {
-    @apply w-52 h-52 rounded-full border-4 border-green-200;
+    @apply w-full h-full object-cover;
 }
 
 .crop-card-body {
@@ -197,7 +210,7 @@ body {
 }
 
 .custom-searchbar {
-    @apply border rounded-full w-2/4 h-11 flex pl-3;
+    @apply border rounded-full w-96 h-11 flex pl-3;
 }
 
 .search-input {
@@ -205,7 +218,7 @@ body {
 }
 
 .search-btn {
-    @apply w-9 rounded-full pl-1;
+    @apply w-14 rounded-full pl-1 flex justify-center items-center hover:bg-gray-100;
 }
 
 .staff-container {
@@ -430,4 +443,33 @@ body {
 
 .used-props-details {
     @apply w-1/2
+}
+
+.uncultivated-field-body {
+    @apply h-5/6 p-2 mt-6 !gap-x-4;
+}
+
+/*uncult card*/
+.uncult-card {
+    @apply w-72 h-64 border p-2 rounded-lg;
+}
+
+.uncult-card-header {
+    @apply w-full h-40 overflow-hidden rounded-sm;
+}
+
+.uncult-card-header-img {
+    @apply w-full h-full object-cover;
+}
+
+.uncult-card-name {
+    @apply font-semibold text-xl text-gray-600;
+}
+
+.uncult-card-address, .uncult-card-size{
+    @apply font-semibold flex gap-1 items-center;
+}
+
+.custom-modal {
+
 }
