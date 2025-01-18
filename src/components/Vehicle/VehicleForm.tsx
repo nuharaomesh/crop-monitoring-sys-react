@@ -1,3 +1,5 @@
+import {MdOutlineDeleteOutline} from "react-icons/md";
+
 export default function VehicleForm(props) {
     return (
         <div className="modal">
@@ -5,6 +7,11 @@ export default function VehicleForm(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}><MdOutlineDeleteOutline size={20}/></button>
+                            :
+                            ""
+                        }
                     </div>
                     <div className="modal-body">
                         <div>
@@ -56,11 +63,6 @@ export default function VehicleForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        {props.title.startsWith("Update") ?
-                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
-                            :
-                            ""
-                        }
                         <button onClick={props.handleCancel} className="cancel-button">Cancel</button>
                         <button onClick={props.handleSubmit} className="save-button">{props.children}</button>
                     </div>

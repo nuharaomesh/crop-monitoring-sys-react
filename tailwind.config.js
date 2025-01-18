@@ -29,11 +29,12 @@ export default {
       },
       colors: {
         customGray: '#7d7d7d',
-        dimgrey: 'dimgrey'
+        dimgrey: 'dimgrey',
+        customBlue: 'rgb(34, 160, 199)',
       },
       padding: {
         '14p': '14px'
-      }
+      },
     },
   },
   plugins: [],

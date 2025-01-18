@@ -26,8 +26,7 @@ export default function AddCrop() {
         navigate('/crop')
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/crop')
     }
 
@@ -42,7 +41,7 @@ export default function AddCrop() {
                       setCropSeason={setCropSeason}
                       setCropCategories={setCropCategories}
                       setCropGrowthTime={setCropGrowthTime}
-            >Save crop</CropForm>
+            >Save</CropForm>
         </>
     )
 }

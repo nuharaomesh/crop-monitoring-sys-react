@@ -1,24 +1,53 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {MdOutlineDeleteOutline} from "react-icons/md";
 
 export default function CropForm(props) {
-
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isVisible, setIsVisible] = useState(false)
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+        const file = event.target.files?.[0]
         if (file) {
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
+            const previewUrl = URL.createObjectURL(file)
+            setImagePreview(previewUrl)
             props.setCropImage(previewUrl)
         }
     };
 
+    const handleOpen = () => {
+        setTimeout(() => {
+            setIsVisible(true)
+        }, 10)
+    };
+
+    useEffect(() => {
+        handleOpen()
+    }, []);
+
+    function handleCancelClick() {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                props.handleCancel()
+            }
+        }, 300);
+    }
+
     return (
         <div className="modal">
             <form className="form-border">
-                <div className="modal-content">
+                <div className={`modal-content modal-animation ${
+                    isVisible
+                        ? 'scale-100 opacity-100'
+                        : 'scale-0 opacity-0'
+                }`}>
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}><MdOutlineDeleteOutline size={20}/></button>
+                            :
+                            ""
+                        }
                     </div>
 
                     <div className="modal-body">
@@ -85,12 +114,7 @@ export default function CropForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        {props.title.startsWith("Update") ?
-                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
-                            :
-                            ""
-                        }
-                        <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
+                        <button type="button" className="cancel-button" onClick={handleCancelClick}>Cancel</button>
                         <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
                     </div>
                 </div>

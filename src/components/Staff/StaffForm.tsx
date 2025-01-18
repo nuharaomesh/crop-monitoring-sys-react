@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {MdOutlineDeleteOutline} from "react-icons/md";
 
 export default function StaffForm(props) {
 
@@ -23,6 +24,11 @@ export default function StaffForm(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
+                        {props.title.startsWith("Update") ?
+                            <button type="button" className="delete-button" onClick={props.handleDelete}><MdOutlineDeleteOutline size={20}/></button>
+                            :
+                            ""
+                        }
                     </div>
 
                     <div className="modal-body">
@@ -129,11 +135,6 @@ export default function StaffForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        {props.title.startsWith("Update") ?
-                            <button type="button" className="delete-button" onClick={props.handleDelete}>Delete</button>
-                            :
-                            ""
-                        }
                         <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
                         <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
                     </div>

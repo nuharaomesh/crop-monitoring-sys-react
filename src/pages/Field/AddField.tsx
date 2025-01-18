@@ -45,7 +45,7 @@ export default function AddField() {
                 setFieldSize={setFieldSize}
                 setFieldImg={setFieldImg}
                 title="Add a new Field"
-            >Save field</FieldForm>
+            >Save</FieldForm>
         </>
     )
 }

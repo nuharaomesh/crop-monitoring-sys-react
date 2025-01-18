@@ -36,8 +36,7 @@ export default function UpdateCrop() {
         navigate('/crop')
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/crop')
     }
 
@@ -54,7 +53,7 @@ export default function UpdateCrop() {
                       setCropCategories={setCropCategories}
                       setCropGrowthTime={setCropGrowthTime}
                       crop={currentCrop}
-            >Update crop</CropForm>
+            >Update</CropForm>
         </>
     )
 }

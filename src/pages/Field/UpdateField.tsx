@@ -60,7 +60,7 @@ export default function UpdateField() {
                 currentLng={currentLongitude}
                 field={currentField}
                 title="Update a new Field"
-            >Update field</FieldForm>
+            >Update</FieldForm>
         </>
     )
 }
