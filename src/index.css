@@ -21,15 +21,19 @@ body {
 
 /*item model styles*/
 .modal {
-    @apply fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-gray-400/25 transition-transform ease-out;
+    @apply fixed inset-0 flex items-center justify-center z-40 backdrop-blur-sm bg-gray-400/25 transition-transform ease-out;
 }
 
 .modal-content {
     @apply bg-white rounded-lg p-6 shadow-lg w-full max-w-lg;
 }
 
+.cultivate-modal-content-body {
+    @apply w-full;
+}
+
 .cultivate-modal-content {
-    @apply !max-w-full h-full;
+    @apply !max-w-2xl h-full overflow-y-auto p-3 box-border rounded-xl;
 }
 
 .modal-header {
@@ -105,7 +109,7 @@ body {
 }
 
 .card-title {
-    @apply text-2xl font-semibold;
+    @apply text-2xl font-semibold text-gray-600;
 }
 
 .card-sub-title {
@@ -115,6 +119,10 @@ body {
 /*Crop card styles*/
 .crop-card {
     @apply w-72;
+}
+
+.crop-card-cat {
+    @apply font-semibold text-green-600 text-20p
 }
 
 .season-title {
@@ -253,7 +261,7 @@ body {
     @apply h-5/6
 }
 
-.staff-card, .vehicle-card, .equipment-card {
+.staff-card, .vehicle-card, .equipment-card, .crop-card-row {
     @apply flex items-center bg-white p-2 shadow-sm rounded-lg hover:bg-gray-100 transition-colors duration-300 space-x-4;
 }
 
@@ -467,9 +475,114 @@ body {
 }
 
 .uncult-card-address, .uncult-card-size{
-    @apply font-semibold flex gap-1 items-center;
+    @apply font-semibold flex gap-2 items-center;
 }
 
 .custom-modal {
 
+}
+
+.field-details-holder {
+    @apply w-full h-72 flex flex-col items-end justify-end;
+}
+
+.field-details-img-holder {
+    @apply w-full h-full overflow-hidden rounded-lg;
+}
+
+.field-details-img {
+    @apply w-full h-full object-cover pointer-events-none;
+}
+
+.field-details {
+    @apply absolute w-72 h-24 bg-white rounded-tl-2xl pt-2 pl-4;
+}
+
+.field-details::before {
+    content: '';
+    @apply absolute -left-6 bottom-0 w-6 h-6 bg-transparent rounded-full;
+    box-shadow: 10px 10px 0 white;
+}
+
+.field-details::after {
+    content: '';
+    @apply absolute -top-6 right-0 w-6 h-6 bg-transparent rounded-full;
+    box-shadow: 10px 10px 0 white;
+}
+
+.crop-details {
+    @apply w-80;
+}
+
+.crop-details-holder {
+    @apply mt-3 h-44 pt-3 flex flex-row gap-5;
+}
+
+.crop-details-img-holder {
+    @apply w-40 h-40 rounded-lg overflow-hidden;
+}
+
+.crop-details-img {
+    @apply w-full h-full object-cover
+}
+
+.crop-details-btn-holder {
+    @apply w-40 p-2 flex;
+}
+
+.crop-details-btn-animation {
+    @apply top-8 right-0 absolute transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300;
+}
+
+.crop-add-btn, .staff-add-btn {
+    @apply w-10 h-10 rounded-full bg-customBlue flex justify-center items-center;
+}
+
+.staff-details-holder {
+    @apply w-full h-80 mt-3 mb-9 py-1;
+}
+
+.staff-details-header {
+    @apply flex h-11 items-center justify-between;
+}
+
+.staff-details-btn-holder {
+    @apply top-6 right-4 absolute transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300;
+}
+
+.staff-details-title {
+    @apply font-semibold text-xl text-gray-500;
+}
+
+.proceed-btn-holder {
+    @apply w-full h-12;
+}
+
+.proceed-btn {
+    @apply w-full h-full bg-green-500 hover:bg-green-600 hover:ease-in-out hover:duration-300 duration-300 text-white font-semibold rounded-md;
+}
+
+.staff-details-list {
+    @apply h-[300px] overflow-auto;
+}
+
+.remove-btn {
+    @apply w-10 h-10 bg-red-600 rounded-full flex items-center justify-center;
+}
+
+.item-holder-modal {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center !z-50;
+}
+
+.staff-crop-holder {
+    @apply h-[400px] border;
+}
+
+
+.card-row-header {
+    @apply w-12 h-12 flex-shrink-0 rounded-full overflow-hidden;
+}
+
+.card-row-body {
+    @apply flex flex-1 justify-between items-center;
 }
