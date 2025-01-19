@@ -30,7 +30,7 @@ function App() {
             children: [
                 { path: '/', element: <Dashboard/> },
                 { path: '/activity', element: <Activity/>, children: [
-                        { path: '/activity/addCultivate', element: <CultivateForm/> }
+                        { path: '/activity/addCultivate/:id', element: <CultivateForm/> }
                     ]
                 },
                 { path: '/field', element: <Field/>, children: [
