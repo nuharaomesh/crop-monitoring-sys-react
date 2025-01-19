@@ -43,10 +43,8 @@ export default function CropForm(props) {
                 }`}>
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
-                        {props.title.startsWith("Update") ?
+                        {props.title.startsWith("Update") &&
                             <button type="button" className="delete-button" onClick={props.handleDelete}><MdOutlineDeleteOutline size={20}/></button>
-                            :
-                            ""
                         }
                     </div>
 
