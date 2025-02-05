@@ -1,9 +1,33 @@
 import React, {useState} from "react";
 import {MdOutlineDeleteOutline} from "react-icons/md";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import {TiWarning} from "react-icons/ti";
+
+const validationSchema = Yup.object({
+    first_name: Yup.string().required("firstname is required"),
+    last_name: Yup.string().required("lastname is required"),
+    dob: Yup.date().required("dob is required"),
+    joined_date: Yup.date().required("Joined data is required"),
+    address: Yup.string().required("address is required"),
+    phone: Yup.string().required("contact number is required"),
+    email: Yup.string().email().required("Email is required"),
+    staff_role: Yup.string().required("Staff role is required")
+});
 
 export default function StaffForm(props) {
 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
+
+    const onSubmit = (data: any) => console.log(data);
 
     const handleSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.setSelectedFieldType(event.target.value as "male" | "female");
@@ -18,9 +42,15 @@ export default function StaffForm(props) {
         }
     };
 
+    function handleInnerSubmit(e: React.SyntheticEvent) {
+        e.preventDefault()
+        handleSubmit(onSubmit)()
+        props.handleSubmit(e)
+    }
+
     return (
         <div className="modal">
-            <form className="form-border">
+            <form className="form-border" onSubmit={handleSubmit(onSubmit)}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
@@ -38,7 +68,8 @@ export default function StaffForm(props) {
                             ) : (
                                 <img
                                     src={props.title?.startsWith("Update") ? props.staff.staffImg : "../../../public/images.png"}
-                                    alt="staff Image" className="item-image"
+                                    alt="staff Image"
+                                    className="item-image"
                                 />
                             )}
                         </div>
@@ -46,17 +77,21 @@ export default function StaffForm(props) {
                             <label htmlFor="first_name" className="form-label">First Name</label>
                             <input type="text" className="form-control" id="first_name"
                                    placeholder="Enter staff first name"
+                                   {...register("first_name")}
                                    onChange={(e) => props.setFirstname(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.firstname : props.firstname}
                             />
+                            {errors.first_name?.message && <p className="form-error">{errors.first_name?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <label htmlFor="last_name" className="form-label">Last Name</label>
                             <input type="text" className="form-control" id="last_name"
                                    placeholder="Enter staff last name"
+                                   {...register("last_name")}
                                    onChange={(e) => props.setLastname(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.lastname : props.lastname}
                             />
+                            {errors.last_name?.message && <p className="form-error">{errors.last_name?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <div className="flex items-center space-x-4">
@@ -86,47 +121,59 @@ export default function StaffForm(props) {
                         <div>
                             <label htmlFor="dob" className="form-label">Date of birth</label>
                             <input type="date" className="form-control" id="dob"
+                                   {...register("dob")}
                                    onChange={(e) => props.setDob(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.dob : props.dob}
                             />
+                            {errors.dob?.message && <p className="form-error">{errors.dob?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <label htmlFor="joined_date" className="form-label">Joined date</label>
                             <input type="date" className="form-control" id="joined_date"
+                                   {...register("joined_date")}
                                    onChange={(e) => props.setJoindeDate(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.joinedDate : props.joinedDate}
                             />
+                            {errors.joined_date?.message && <p className="form-error">{errors.joined_date?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <label htmlFor="address" className="form-label">Home address</label>
                             <input type="text" className="form-control" id="address"
                                    placeholder="Enter staff address"
+                                   {...register("address")}
                                    onChange={(e) => props.setAddress(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.address : props.address}
                             />
+                            {errors.address?.message && <p className="form-error">{errors.address?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
-                            <label htmlFor="phoneNo" className="form-label">Mobile number</label>
-                            <input type="text" className="form-control" id="phoneNo"
+                            <label htmlFor="phone" className="form-label">Mobile number</label>
+                            <input type="text" className="form-control" id="phone"
                                    placeholder="Enter staff phone No"
+                                   {...register("phone")}
                                    onChange={(e) => props.setPhoneNo(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.phone : props.phone}
                             />
+                            {errors.phone?.message && <p className="form-error">{errors.phone?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <label htmlFor="email" className="form-label">Email address</label>
                             <input type="text" className="form-control" id="email"
                                    placeholder="Enter staff email"
+                                   {...register("email")}
                                    onChange={(e) => props.setEmail(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.email : props.email}
                             />
+                            {errors.email?.message && <p className="form-error">{errors.email?.message} <TiWarning color="red" /></p>}
                         </div>
                         <div>
                             <label htmlFor="staff_role" className="form-label">Staff member role</label>
                             <input className="form-control" list="jobRole" placeholder="Select job role"
                                    id="staff_role"
+                                   {...register("staff_role")}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.role : props.role}
                                    onChange={(e) => props.setStaffRole(e.target.value)}/>
+                            {errors.staff_role?.message && <p className="form-error">{errors.staff_role?.message} <TiWarning color="red" /></p>}
                             <datalist id="jobRole">
                                 <option value="Labor">Labor</option>
                                 <option value="Scientist">Scientist</option>
@@ -136,7 +183,7 @@ export default function StaffForm(props) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
-                        <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
+                        <button type="submit" className="save-button" onClick={handleInnerSubmit}>{props.children}</button>
                     </div>
                 </div>
             </form>

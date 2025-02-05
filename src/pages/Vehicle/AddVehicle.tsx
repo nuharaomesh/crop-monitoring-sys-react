@@ -19,10 +19,12 @@ export default function AddVehicle() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const genVehicleID = generateID("VEHICLE")
-        const newVehicle = new Vehicle(genVehicleID, licenceNumber, vehicleType, fuelType, remarks, status)
-        dispatch(add_vehicle({...newVehicle}))
-        navigate('/staff')
+        if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
+            const genVehicleID = generateID("VEHICLE")
+            const newVehicle = new Vehicle(genVehicleID, licenceNumber, vehicleType, fuelType, remarks, status)
+            dispatch(add_vehicle({...newVehicle}))
+            navigate('/staff')
+        }
     }
 
     function handleCancel(event: React.SyntheticEvent) {
@@ -40,7 +42,7 @@ export default function AddVehicle() {
                 setLicence={setLicenceNumber}
                 setRemarks={setRemarks}
                 handleCancel={handleCancel}
-                handleSubmit={handleSubmit}
+                handleSave={handleSubmit}
             >Save</VehicleForm>
         </>
     )

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
 import {Vehicle} from "../../models/Vehicle.ts";
 import {delete_vehicle, update_vehicle} from "../../reducers/VehicleSlice.ts";
+import Swal from "sweetalert2";
 
 export default function UpdateVehicle() {
 
@@ -24,15 +25,37 @@ export default function UpdateVehicle() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const updatedVehicle = new Vehicle(vehicleCode, licenceNumber, vehicleType, fuelType, remarks, status)
-        dispatch(update_vehicle({...updatedVehicle}))
-        navigate('/staff')
+        if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
+            const updatedVehicle = new Vehicle(vehicleCode, licenceNumber, vehicleType, fuelType, remarks, status)
+            dispatch(update_vehicle({...updatedVehicle}))
+            navigate('/staff')
+        }
     }
 
     function handleDelete(event: React.SyntheticEvent) {
         event.preventDefault()
-        dispatch(delete_vehicle({...currentVehicle}))
-        navigate('/staff')
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to undo this!",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "white",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            width: "600px",
+            customClass: {
+                popup: "custom-popup",
+                icon: "custom-icon",
+                title: "custom-title",
+                confirmButton: "custom-confirm-btn",
+                cancelButton: "custom-cancel-btn"
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(delete_vehicle({...currentVehicle}))
+                navigate('/staff')
+            }
+        });
     }
 
     function handleCancel(event: React.SyntheticEvent) {
@@ -50,7 +73,7 @@ export default function UpdateVehicle() {
                 setLicence={setLicenceNumber}
                 setRemarks={setRemarks}
                 handleCancel={handleCancel}
-                handleSubmit={handleSubmit}
+                handleSave={handleSubmit}
                 handleDelete={handleDelete}
                 vehicle={currentVehicle}
             >Update</VehicleForm>

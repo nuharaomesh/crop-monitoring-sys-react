@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Staff} from "../../models/Staff.ts";
 import {delete_staff, update_staff} from "../../reducers/StaffSlice.ts";
+import Swal from 'sweetalert2';
 
 export default function UpdateStaff() {
 
@@ -30,15 +31,37 @@ export default function UpdateStaff() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
-        dispatch(update_staff({...updatedStaff}))
-        navigate('/staff')
+        if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === 0 || email === "" || role === "" || status === undefined)) {
+            const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
+            dispatch(update_staff({...updatedStaff}))
+            navigate('/staff')
+        }
     }
 
     function handleDelete(event) {
         event.preventDefault()
-        dispatch(delete_staff({...currentStaff}))
-        navigate('/staff')
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to undo this!",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "white",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            width: "600px",
+            customClass: {
+                popup: "custom-popup",
+                icon: "custom-icon",
+                title: "custom-title",
+                confirmButton: "custom-confirm-btn",
+                cancelButton: "custom-cancel-btn"
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(delete_staff({ ...currentStaff }));
+                navigate('/staff');
+            }
+        });
     }
 
     function handleCancel(event: React.SyntheticEvent) {

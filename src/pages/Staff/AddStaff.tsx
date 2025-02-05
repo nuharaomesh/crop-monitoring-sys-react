@@ -14,7 +14,7 @@ export default function AddStaff() {
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
     const [gender, setGender] = useState<"male" | "female">("male")
-    const [staffImg, setStaffImg] = useState<string | null>(null)
+    const [staffImg, setStaffImg] = useState<string | null>("../../../public/images.png")
     const [dob, setDob] = useState('')
     const [joinedDate, setJoinedDate] = useState('')
     const [address, setAddress] = useState('')
@@ -25,10 +25,12 @@ export default function AddStaff() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const genStaffID = generateID("STAFF")
-        const newStaff = new Staff(genStaffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
-        dispatch(add_staff({...newStaff}))
-        navigate('/staff')
+        if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === 0 || email === "" || role === "" || status === undefined)) {
+            const genStaffID = generateID("STAFF")
+            const newStaff = new Staff(genStaffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
+            dispatch(add_staff({...newStaff}))
+            navigate('/staff')
+        }
     }
 
     function handleCancel(event: React.SyntheticEvent) {
