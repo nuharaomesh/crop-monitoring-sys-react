@@ -2,7 +2,7 @@ import VehicleForm from "../../components/Vehicle/VehicleForm.tsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {Vehicle} from "../../models/Vehicle.ts";
+import Vehicle from "../../models/Vehicle.ts";
 import generateID from "../../util/GenerateID.ts";
 import {add_vehicle} from "../../reducers/VehicleSlice.ts";
 
@@ -21,7 +21,7 @@ export default function AddVehicle() {
         event.preventDefault()
         if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
             const genVehicleID = generateID("VEHICLE")
-            const newVehicle = new Vehicle(genVehicleID, licenceNumber, vehicleType, fuelType, remarks, status)
+            const newVehicle = new Vehicle(genVehicleID, licenceNumber, vehicleType, fuelType, remarks, status, 10)
             dispatch(add_vehicle({...newVehicle}))
             navigate('/staff')
         }

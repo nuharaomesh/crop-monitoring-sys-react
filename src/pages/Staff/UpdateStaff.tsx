@@ -2,7 +2,7 @@ import StaffForm from "../../components/Staff/StaffForm.tsx";
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Staff} from "../../models/Staff.ts";
+import Staff from "../../models/Staff.ts";
 import {delete_staff, update_staff} from "../../reducers/StaffSlice.ts";
 import Swal from 'sweetalert2';
 
@@ -32,7 +32,7 @@ export default function UpdateStaff() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === 0 || email === "" || role === "" || status === undefined)) {
-            const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
+            const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status, 10)
             dispatch(update_staff({...updatedStaff}))
             navigate('/staff')
         }

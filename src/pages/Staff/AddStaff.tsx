@@ -1,6 +1,6 @@
 import StaffForm from "../../components/Staff/StaffForm.tsx";
 import React, {useState} from "react";
-import {Staff} from "../../models/Staff.ts";
+import Staff from "../../models/Staff.ts";
 import generateID from "../../util/GenerateID.ts";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -27,7 +27,7 @@ export default function AddStaff() {
         event.preventDefault()
         if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === 0 || email === "" || role === "" || status === undefined)) {
             const genStaffID = generateID("STAFF")
-            const newStaff = new Staff(genStaffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
+            const newStaff = new Staff(genStaffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status, 10)
             dispatch(add_staff({...newStaff}))
             navigate('/staff')
         }
