@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {Staff} from "../models/Staff.ts";
+import Staff from "../models/Staff.ts";
 
 const initialState: Staff[] = []
 const StaffSlice = createSlice({
