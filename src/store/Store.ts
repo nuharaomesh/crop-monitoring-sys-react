@@ -16,3 +16,5 @@ export const store = configureStore({
         equipment: EquipmentSlice
     }
 })
+
+export type RootState = ReturnType<typeof store.getState>
