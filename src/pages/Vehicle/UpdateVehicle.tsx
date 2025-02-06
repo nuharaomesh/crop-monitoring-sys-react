@@ -2,7 +2,7 @@ import VehicleForm from "../../components/Vehicle/VehicleForm.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
-import {Vehicle} from "../../models/Vehicle.ts";
+import Vehicle from "../../models/Vehicle.ts";
 import {delete_vehicle, update_vehicle} from "../../reducers/VehicleSlice.ts";
 import Swal from "sweetalert2";
 
@@ -16,17 +16,17 @@ export default function UpdateVehicle() {
         state.vehicle.find((v: Vehicle) => v.vehicleID === id)
     )
 
-    const [vehicleCode, setVehicleCode] = useState(currentVehicle.vehicleID)
-    const [vehicleType, setVehicleType] = useState(currentVehicle.category)
-    const [fuelType, setFuelType] = useState(currentVehicle.fuelType)
-    const [status, setStatus] = useState(currentVehicle.status)
-    const [licenceNumber, setLicenceNumber] = useState(currentVehicle.licencePlate)
-    const [remarks, setRemarks] = useState(currentVehicle.remarks)
+    const [vehicleCode, setVehicleCode] = useState(currentVehicle?.vehicleID)
+    const [vehicleType, setVehicleType] = useState(currentVehicle?.category)
+    const [fuelType, setFuelType] = useState(currentVehicle?.fuelType)
+    const [status, setStatus] = useState(currentVehicle?.status)
+    const [licenceNumber, setLicenceNumber] = useState(currentVehicle?.licencePlate)
+    const [remarks, setRemarks] = useState(currentVehicle?.remarks)
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
-            const updatedVehicle = new Vehicle(vehicleCode, licenceNumber, vehicleType, fuelType, remarks, status)
+            const updatedVehicle = new Vehicle(vehicleCode, licenceNumber, vehicleType, fuelType, remarks, status, 10)
             dispatch(update_vehicle({...updatedVehicle}))
             navigate('/staff')
         }
