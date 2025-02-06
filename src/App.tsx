@@ -6,7 +6,6 @@ import Activity from "./pages/Activity.tsx";
 import Field from "./pages/Field/Field.tsx";
 import Crop from "./pages/Crop/Crop.tsx";
 import Staff from "./pages/Staff/Staff.tsx";
-import Reports from "./pages/Reports.tsx";
 import Insights from "./pages/Insights.tsx";
 import Settings from "./pages/Settings.tsx";
 import CultivateForm from "./components/Cultivate/CultivateForm.tsx";
@@ -52,7 +51,6 @@ function App() {
                         { path: '/staff/updateEquipment/:id', element: <UpdateEquipment/>},
                     ]
                 },
-                { path: '/Reports', element: <Reports/> },
                 { path: '/insights', element: <Insights/> },
                 { path: '/settings', element: <Settings/> },
             ]
