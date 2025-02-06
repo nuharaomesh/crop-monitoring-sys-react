@@ -2,10 +2,22 @@ import {Link, Outlet} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import VehicleCard from "../Cards/VehicleCard.tsx";
 import {useSelector} from "react-redux";
+import Vehicle from "../../models/Vehicle.ts";
+import {useEffect, useState} from "react";
 
 export default function VehicleList() {
 
     const vehicles = useSelector(state => state.vehicle)
+    const [searchValue, setSearchValue] = useState('')
+    const [filteredVehicle, setFilteredVehicle] = useState<[]>([])
+
+    useEffect(() => {
+        setFilteredVehicle(
+            vehicles.filter((v: Vehicle) =>
+                v.category.toLowerCase().includes(searchValue)
+            )
+        )
+    }, [searchValue]);
 
     return (
         <section className="vehicle-list">
@@ -18,10 +30,20 @@ export default function VehicleList() {
             </div>
             <div className="list-body">
                 <div className="vehicle-searchbar">
-                    <Searchbar/>
+                    <Searchbar searchValue={setSearchValue}/>
                 </div>
                 <div className="list-items vehicle-list-h">
-                    {vehicles.map(vehicle =>
+                    {!(searchValue === "") ? (
+                        filteredVehicle.map((v: Vehicle) => (
+                            <VehicleCard key={v.vehicleID}
+                                         vehicleID={v.vehicleID}
+                                         vehicleType={v.category}
+                                         fuelType={v.fuelType}
+                                         status={v.status}
+                                         licenceNumber={v.licencePlate}
+                            />
+                        ))
+                    ) : (vehicles.map((vehicle: Vehicle) =>
                         <VehicleCard key={vehicle.vehicleID}
                                      vehicleID={vehicle.vehicleID}
                                      vehicleType={vehicle.category}
@@ -29,7 +51,7 @@ export default function VehicleList() {
                                      status={vehicle.status}
                                      licenceNumber={vehicle.licencePlate}
                         />
-                    )}
+                    ))}
                 </div>
             </div>
             <Outlet/>
