@@ -2,10 +2,23 @@ import {Link, Outlet} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import StaffCard from "../Cards/StaffCard.tsx";
 import {useSelector} from "react-redux";
+import Staff from "../../models/Staff.ts";
+import {RootState} from "../../store/Store.ts";
+import {useEffect, useState} from "react";
 
 export default function StaffList() {
 
-    const staffs = useSelector(state => state.staff)
+    const [searchValue, setSearchValue] = useState("")
+    const staffs: Staff[] = useSelector((state: RootState) => state.staff)
+    const [filteredStaff, setFilteredStaff] = useState<Staff[]>([])
+
+    useEffect(() => {
+        setFilteredStaff(
+            staffs.filter((s) =>
+                s.firstname.toLowerCase().includes(searchValue)
+            )
+        )
+    }, [searchValue]);
 
     return (
         <section className="staff-list">
@@ -18,10 +31,22 @@ export default function StaffList() {
             </div>
             <div className="staff-list-body">
                 <div className="staff-searchbar">
-                    <Searchbar/>
+                    <Searchbar searchValue={setSearchValue}/>
                 </div>
                 <div className="list-items staff-list-h">
-                    {staffs.map(staff => (
+                    {!(searchValue === "") ? (
+                        filteredStaff.map((s) => (
+                            <StaffCard key={s.staffID}
+                                       staffID={s.staffID}
+                                       img={s.staffImg}
+                                       name={`${s.firstname} ${s.lastname}`}
+                                       role={s.role}
+                                       stat={s.status}
+                                       phone={s.phone}
+                                       email={s.email}
+                            />
+                        ))
+                    ) : (staffs.map((staff: Staff) => (
                         <StaffCard key={staff.staffID}
                                    staffID={staff.staffID}
                                    img={staff.staffImg}
@@ -31,7 +56,7 @@ export default function StaffList() {
                                    phone={staff.phone}
                                    email={staff.email}
                         />
-                    ))}
+                    )))}
                 </div>
             </div>
             <Outlet/>
