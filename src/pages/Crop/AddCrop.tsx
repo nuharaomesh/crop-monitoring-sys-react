@@ -13,7 +13,7 @@ export default function AddCrop() {
 
     const [cropName, setCropName] = useState('')
     const [cropScientificName, setCropScientificName] = useState('')
-    const [cropImage, setCropImage] = useState<string | null>(null);
+    const [cropImage, setCropImage] = useState<string | null>("../../../public/images.png");
     const [cropSeason, setCropSeason] = useState('')
     const [cropCategories, setCropCategories] = useState('')
     const [cropGrowthTime, setCropGrowthTime] = useState('')
