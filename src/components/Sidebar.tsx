@@ -14,7 +14,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <img src="../../public/icon.png" alt="" className="w-full h-32 object-cover rounded-"/>
+            <img src="../../public/icon.png" alt="" className="w-full h-32 object-cover pointer-events-none"/>
             <nav>
                 <ul>
                     <li><Link to="/" className={`${getItemClasses("dashboard")} block h-full w-full`} onClick={() => setActiveItem("dashboard")}>Dashboard</Link></li>
@@ -35,7 +35,6 @@ export default function Sidebar() {
                             </ul>
                         )}
                     </li>
-                    <li><Link to="/reports" className={`${getItemClasses("reports")} block h-full w-full`} onClick={() => setActiveItem("reports")}>Reports</Link></li>
                     <li><Link to="/insights" className={`${getItemClasses("insight")} block h-full w-full`} onClick={() => setActiveItem("insight")}>Insights</Link></li>
                     <li><Link to="/settings" className={`${getItemClasses("setting")} block h-full w-full`} onClick={() => setActiveItem("setting")}>Settings</Link></li>
                 </ul>
