@@ -23,7 +23,7 @@ export default function VehicleForm(props) {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = (data: any) => console.log(data);
+    const onSubmit = () => console.log();
 
     function handleInnerSubmit(e: React.SyntheticEvent) {
         e.preventDefault()
@@ -51,7 +51,7 @@ export default function VehicleForm(props) {
                                        placeholder="Enter vehicle type"
                                        {...register("vehicle_type")}
                                        onChange={(e) => props.setVehicleType(e.target.value)}
-                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle.category : props.category}
+                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.category : props.category}
                                 />
                                 {errors.vehicle_type?.message && <p className="form-error">{errors.vehicle_type?.message} <TiWarning color="red" /></p>}
                             </div>
@@ -60,7 +60,7 @@ export default function VehicleForm(props) {
                                 <input className="form-control" list="fuelTypes" placeholder="Select vehicle fuel type"
                                        id="fuel_type"
                                        {...register("fuel_type")}
-                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle.fuelType : props.fuelType}
+                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.fuelType : props.fuelType}
                                        onChange={(e) => props.setFuelType(e.target.value)}/>
                                 {errors.fuel_type?.message && <p className="form-error">{errors.fuel_type?.message} <TiWarning color="red" /></p>}
                                 <datalist id="fuelTypes">
@@ -73,7 +73,7 @@ export default function VehicleForm(props) {
                                 <input className="form-control" list="vhStatus" placeholder="Vehicle status"
                                        id="status"
                                        {...register("status")}
-                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle.status : props.status}
+                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.status : props.status}
                                        onChange={(e) => props.setVehicleStatus(e.target.value)}/>
                                 {errors.status?.message && <p className="form-error">{errors.status?.message} <TiWarning color="red" /></p>}
                                 <datalist id="vhStatus">
@@ -87,7 +87,7 @@ export default function VehicleForm(props) {
                                 <input type="text" id="licence_num" className="form-control" placeholder="Enter vehicle licence number"
                                        {...register("licence_number")}
                                        onChange={(e) => props.setLicence(e.target.value)}
-                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle.licencePlate : props.licencePlate}
+                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.licencePlate : props.licencePlate}
                                 />
                                 {errors.licence_number?.message && <p className="form-error">{errors.licence_number?.message} <TiWarning color="red" /></p>}
                             </div>
@@ -97,7 +97,7 @@ export default function VehicleForm(props) {
                                           id="vehicle_remarks"
                                           {...register("vehicle_remarks")}
                                           onChange={(e) => props.setRemarks(e.target.value)}
-                                          defaultValue={props.title?.startsWith("Update") ? props.vehicle.remarks : props.remarks}
+                                          defaultValue={props.title?.startsWith("Update") ? props.vehicle?.remarks : props.remarks}
                                 ></textarea>
                                 {errors.vehicle_remarks?.message && <p className="form-error">{errors.vehicle_remarks?.message} <TiWarning color="red" /></p>}
                             </div>
