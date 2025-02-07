@@ -54,7 +54,6 @@ export default function VehicleList() {
                     ))}
                 </div>
             </div>
-            <Outlet/>
         </section>
     )
 }

@@ -59,7 +59,6 @@ export default function StaffList() {
                     )))}
                 </div>
             </div>
-            <Outlet/>
         </section>
     )
 }

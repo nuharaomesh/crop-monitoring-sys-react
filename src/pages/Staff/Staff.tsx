@@ -20,6 +20,7 @@ import VehicleModel from "../../models/Vehicle.ts";
 import StaffModel from "../../models/Staff.ts";
 import {useEffect, useState} from "react";
 import {RootState} from "../../store/Store.ts";
+import {Outlet} from "react-router-dom";
 
 const chartConfig = {} satisfies ChartConfig
 interface vehicleGraphData {
@@ -195,6 +196,7 @@ export default function Staff() {
                     <VehicleList/>
                 </div>
             </div>
+            <Outlet/>
         </section>
     )
 }
