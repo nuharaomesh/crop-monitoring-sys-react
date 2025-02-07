@@ -14,14 +14,10 @@ export default function CropForm(props) {
         }
     };
 
-    const handleOpen = () => {
+    useEffect(() => {
         setTimeout(() => {
             setIsVisible(true)
         }, 10)
-    };
-
-    useEffect(() => {
-        handleOpen()
     }, []);
 
     function handleCancelClick() {
@@ -29,6 +25,15 @@ export default function CropForm(props) {
         setTimeout(() => {
             if (props.handleCancel) {
                 props.handleCancel()
+            }
+        }, 300);
+    }
+
+    function handleSubmitClick(e) {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                props.handleSubmit(e)
             }
         }, 300);
     }
@@ -113,7 +118,7 @@ export default function CropForm(props) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="cancel-button" onClick={handleCancelClick}>Cancel</button>
-                        <button type="button" className="save-button" onClick={props.handleSubmit}>{props.children}</button>
+                        <button type="button" className="save-button" onClick={handleSubmitClick}>{props.children}</button>
                     </div>
                 </div>
             </form>

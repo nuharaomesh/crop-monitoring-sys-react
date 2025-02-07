@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {MdOutlineDeleteOutline} from "react-icons/md";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -18,6 +18,7 @@ const validationSchema = Yup.object({
 
 export default function StaffForm(props) {
 
+    const [isVisible, setIsVisible] = useState(false)
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const {
         register,
@@ -26,6 +27,21 @@ export default function StaffForm(props) {
     } = useForm({
         resolver: yupResolver(validationSchema),
     });
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsVisible(true)
+        }, 10)
+    }, []);
+
+    function handleCancelClick() {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                props.handleCancel()
+            }
+        }, 300);
+    }
 
     const onSubmit = (data: any) => console.log(data);
 
@@ -42,16 +58,24 @@ export default function StaffForm(props) {
         }
     };
 
-    function handleInnerSubmit(e: React.SyntheticEvent) {
-        e.preventDefault()
-        handleSubmit(onSubmit)()
-        props.handleSubmit(e)
+    function handleInnerSubmit(e) {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                handleSubmit(onSubmit)()
+                props.handleSubmit(e)
+            }
+        }, 300);
     }
 
     return (
         <div className="modal">
             <form className="form-border" onSubmit={handleSubmit(onSubmit)}>
-                <div className="modal-content">
+                <div className={`modal-content modal-animation ${
+                    isVisible
+                        ? 'scale-100 opacity-100'
+                        : 'scale-0 opacity-0'
+                }`}>
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
                         {props.title.startsWith("Update") ?
@@ -182,7 +206,7 @@ export default function StaffForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="cancel-button" onClick={props.handleCancel}>Cancel</button>
+                        <button type="button" className="cancel-button" onClick={handleCancelClick}>Cancel</button>
                         <button type="submit" className="save-button" onClick={handleInnerSubmit}>{props.children}</button>
                     </div>
                 </div>

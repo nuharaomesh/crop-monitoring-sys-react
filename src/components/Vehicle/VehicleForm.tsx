@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {TiWarning} from "react-icons/ti";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 const validationSchema = Yup.object({
     vehicle_type: Yup.string().required("Vehicle type is required"),
@@ -15,6 +15,23 @@ const validationSchema = Yup.object({
 
 export default function VehicleForm(props) {
 
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsVisible(true)
+        }, 10)
+    }, []);
+
+    function handleCancelClick() {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                props.handleCancel()
+            }
+        }, 300);
+    }
+
     const {
         register,
         handleSubmit,
@@ -25,16 +42,24 @@ export default function VehicleForm(props) {
 
     const onSubmit = () => console.log();
 
-    function handleInnerSubmit(e: React.SyntheticEvent) {
-        e.preventDefault()
-        handleSubmit(onSubmit)()
-        props.handleSave(e);
+    function handleInnerSubmit(e) {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                handleSubmit(onSubmit)()
+                props.handleSave(e);
+            }
+        }, 300);
     }
 
     return (
         <div className="modal">
             <form onSubmit={handleSubmit(onSubmit)} className="form-border">
-                <div className="modal-content">
+                <div className={`modal-content modal-animation ${
+                    isVisible
+                        ? 'scale-100 opacity-100'
+                        : 'scale-0 opacity-0'
+                }`}>
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
                         {props.title.startsWith("Update") ?
@@ -104,7 +129,7 @@ export default function VehicleForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={props.handleCancel} className="cancel-button">Cancel</button>
+                        <button type="button" onClick={handleCancelClick} className="cancel-button">Cancel</button>
                         <button onClick={handleInnerSubmit}
                                 className="save-button"
                                 type="submit">{props.children}</button>
