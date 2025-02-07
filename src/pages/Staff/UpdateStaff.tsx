@@ -64,8 +64,7 @@ export default function UpdateStaff() {
         });
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/staff')
     }
 

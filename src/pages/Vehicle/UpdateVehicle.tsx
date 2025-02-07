@@ -58,8 +58,7 @@ export default function UpdateVehicle() {
         });
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/staff')
     }
 

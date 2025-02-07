@@ -27,8 +27,7 @@ export default function AddVehicle() {
         }
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/staff')
     }
 

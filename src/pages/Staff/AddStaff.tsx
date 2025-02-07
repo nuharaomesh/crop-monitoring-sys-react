@@ -33,8 +33,7 @@ export default function AddStaff() {
         }
     }
 
-    function handleCancel(event: React.SyntheticEvent) {
-        event.preventDefault()
+    function handleCancel() {
         navigate('/staff')
     }
 
