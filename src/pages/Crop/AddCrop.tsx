@@ -20,10 +20,15 @@ export default function AddCrop() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const genCropCode = generateID("CROP")
-        const newCrop = new Crop(genCropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
-        dispatch(add_crop({...newCrop}))
-        navigate('/crop')
+        if (!(cropName === "" || cropScientificName === "" || cropCategories === "" || cropSeason === "" || cropGrowthTime === "")) {
+            const genCropCode = generateID("CROP")
+            const newCrop = new Crop(genCropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
+            dispatch(add_crop({...newCrop}))
+            setTimeout(() => {
+                navigate('/crop')
+            }, 301)
+            return true
+        }
     }
 
     function handleCancel() {
