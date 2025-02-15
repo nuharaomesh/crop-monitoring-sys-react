@@ -36,7 +36,6 @@ export default function Sidebar() {
                         )}
                     </li>
                     <li><Link to="/insights" className={`${getItemClasses("insight")} block h-full w-full`} onClick={() => setActiveItem("insight")}>Insights</Link></li>
-                    <li><Link to="/settings" className={`${getItemClasses("setting")} block h-full w-full`} onClick={() => setActiveItem("setting")}>Settings</Link></li>
                 </ul>
             </nav>
         </>
