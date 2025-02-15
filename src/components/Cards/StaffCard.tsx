@@ -2,10 +2,12 @@ import {Link} from "react-router-dom";
 import {BsFillPenFill} from "react-icons/bs";
 import {FaDeleteLeft} from "react-icons/fa6";
 import {BiSolidMessageSquareAdd} from "react-icons/bi";
+import { useEffect, useState } from "react";
 
 export default function StaffCard(props) {
 
     let content
+    const [preImg, setPreImg] = useState("")
 
     function assignStaff() {
         props.setStaffID(props.staffID)
@@ -14,6 +16,10 @@ export default function StaffCard(props) {
     function removeStaff() {
         props.removeStaff(props.staffID)
     }
+
+    useEffect(() => {
+        setPreImg(`data:image/jpeg;base64,${props.img}`)
+    }, [])
 
     if (props.assignable) {
         content = <button type="button" className="staff-add-btn" onClick={assignStaff}><BiSolidMessageSquareAdd size="16" color="white"/></button>
@@ -30,7 +36,7 @@ export default function StaffCard(props) {
         <div className="staff-card relative group">
             <div className="staff-card-img w-12 h-12 flex-shrink-0 rounded-full overflow-hidden">
                 <img
-                    src={props.img}
+                    src={preImg}
                     alt="Staff Profile"
                     className="w-full h-full object-cover"
                 />
