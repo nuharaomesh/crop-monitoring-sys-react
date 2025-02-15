@@ -1,8 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import FieldMap from "../FieldMap.tsx";
 import {MdOutlineDeleteOutline} from "react-icons/md";
+import * as Yup from "yup";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {TiWarning} from "react-icons/ti";
+
+const validationSchema = Yup.object({
+    field_name: Yup.string().required("Field name is required"),
+    field_size: Yup.string().required("Field size is required"),
+});
 
 export default function FieldForm(props) {
+
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsVisible(true)
+        }, 10)
+    }, []);
 
     const [lat, setLat] = useState(props.title.startsWith("Update") ? props.currentLat : 6.6755701454919105);
     const [lng, setLng] = useState(props.title.startsWith("Update") ? props.currentLng : 80.16122817993165);
@@ -15,9 +32,7 @@ export default function FieldForm(props) {
         props.setLongitude(newLng)
         props.setFieldAddress(address)
     }
-
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -27,10 +42,43 @@ export default function FieldForm(props) {
         }
     };
 
+    function handleCancelClick(e) {
+        setIsVisible(false)
+        setTimeout(() => {
+            if (props.handleCancel) {
+                props.handleCancel(e)
+            }
+        }, 300);
+    }
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
+    const onSubmit = () => console.log();
+
+    function handleInnerSubmit(e) {
+        setTimeout(() => {
+            if (props.handleSubmit) {
+                handleSubmit(onSubmit)()
+                if (props.handleSubmit(e)) {
+                    setIsVisible(false)
+                }
+            }
+        }, 300);
+    }
+
     return (
         <div className="modal">
-            <form action="" className="form-border">
-                <div className="modal-content">
+            <form onSubmit={handleSubmit(onSubmit)} className="form-border">
+                <div className={`modal-content modal-animation ${
+                    isVisible
+                        ? 'scale-100 opacity-100'
+                        : 'scale-0 opacity-0'
+                }`}>
                     <div className="modal-header">
                         <h1 className="modal-title">{props.title}</h1>
                         {props.title.startsWith("Update") ?
@@ -52,9 +100,11 @@ export default function FieldForm(props) {
                             <label htmlFor="field_name" className="form-label">Field name</label>
                                 <input type="text" id="field_name" className="form-control"
                                        placeholder="Enter your field name"
+                                       {...register("field_name")}
                                        onChange={(e) => props.setFieldName(e.target.value)}
                                        defaultValue={props.title?.startsWith("Update") ? props.field.fieldName : props.fieldName}
                                 />
+                                {errors.field_name?.message && <p className="form-error">{errors.field_name?.message} <TiWarning color="red" /></p>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="field_image" className="form-label">Choose field image</label>
@@ -64,9 +114,11 @@ export default function FieldForm(props) {
                                 <label htmlFor="field_size" className="form-label">Field size</label>
                                 <input type="text" id="field_size" className="form-control"
                                        placeholder="Size of field"
+                                       {...register("field_size")}
                                        onChange={(e) => props.setFieldSize(e.target.value)}
                                        defaultValue={props.title?.startsWith("Update") ? props.field.fieldSize : props.fieldSize}
                                 />
+                                {errors.field_size?.message && <p className="form-error">{errors.field_size?.message} <TiWarning color="red" /></p>}
                             </div>
                         </div>
                         <div className="mt-6">
@@ -85,8 +137,8 @@ export default function FieldForm(props) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={props.handleCancel} className="cancel-button">Cancel</button>
-                        <button onClick={props.handleSubmit} className="save-button">{props.children}</button>
+                        <button onClick={handleCancelClick} className="cancel-button">Cancel</button>
+                        <button onClick={handleInnerSubmit} className="save-button">{props.children}</button>
                     </div>
                 </div>
             </form>

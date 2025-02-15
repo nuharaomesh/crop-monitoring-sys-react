@@ -54,16 +54,17 @@ export default function StaffForm(props) {
         if (file) {
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
-            props.setStaffImage(previewUrl)
+            props.setStaffImage(file)
         }
     };
 
     function handleInnerSubmit(e) {
-        setIsVisible(false)
         setTimeout(() => {
             if (props.handleCancel) {
                 handleSubmit(onSubmit)()
-                props.handleSubmit(e)
+                if (props.handleSubmit(e)) {
+                    setIsVisible(false)
+                }
             }
         }, 300);
     }
@@ -120,7 +121,7 @@ export default function StaffForm(props) {
                         <div>
                             <div className="flex items-center space-x-4">
                                 <label className="flex items-center space-x-2">
-                                    <input type="radio" name="gender" value="male"
+                                    <input type="radio" name="gender" value="MALE"
                                            className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
                                            onChange={handleSelectionChange}
                                            defaultChecked={props.title.startsWith("Update") ? props.staff.gender === "male" : true}
@@ -128,7 +129,7 @@ export default function StaffForm(props) {
                                     <span className="text-gray-700">Male</span>
                                 </label>
                                 <label className="flex items-center space-x-2">
-                                    <input type="radio" name="gender" value="female"
+                                    <input type="radio" name="gender" value="FEMALE"
                                            className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500"
                                            onChange={handleSelectionChange}
                                            defaultChecked={props.title.startsWith("Update") ? props.staff.gender === "female" : false}
@@ -155,7 +156,7 @@ export default function StaffForm(props) {
                             <label htmlFor="joined_date" className="form-label">Joined date</label>
                             <input type="date" className="form-control" id="joined_date"
                                    {...register("joined_date")}
-                                   onChange={(e) => props.setJoindeDate(e.target.value)}
+                                   onChange={(e) => props.setJoinedDate(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.staff.joinedDate : props.joinedDate}
                             />
                             {errors.joined_date?.message && <p className="form-error">{errors.joined_date?.message} <TiWarning color="red" /></p>}
