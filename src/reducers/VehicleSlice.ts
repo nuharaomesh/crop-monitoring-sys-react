@@ -1,25 +1,148 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {Vehicle} from "../models/Vehicle.ts";
+import axios from "axios";
 
-const initialState: Vehicle[] = []
+const api = axios.create({
+    baseURL: "http://localhost:3000/api/vehicle"
+})
+
+export const getAllVehicles = createAsyncThunk(
+    'vehicle/getAllVehicle',
+    async () => {
+        try {
+            const resp = await api.get('/get')            
+            return resp.data
+        } catch (e) {
+            throw new Error('error in get all vehicles: ' + e)
+        }
+    }
+)
+
+export const getVehicleCount = createAsyncThunk(
+    'vehicle/getVehicleCount',
+    async () => {
+        try {
+            const resp = await api.get('/get_count')
+            return resp.data
+        } catch (e) {
+            throw new Error('error in get vehicle count: ' + e)
+        }
+    }
+)
+
+export const saveVehicle = createAsyncThunk(
+    'vehicle/saveVehicle',
+    async (vehicle: Vehicle) => {
+        try {
+            const resp = await api.post('/save', vehicle)
+            return resp.data
+        } catch (e) {
+            throw new Error('error in save vehicle: ' + e)
+        }
+    }
+)
+
+export const updateVehicle = createAsyncThunk(
+    'vehicle/updateVehicle',
+    async (vehicle: Vehicle) => {
+        try {
+            const resp = await api.put(`/update/${vehicle.vehicleID}`, vehicle)
+            return resp.data
+        } catch (e) {
+            throw new Error('error in update vehicle: ' + e)
+        }
+    }
+)
+
+export const deleteVehicle = createAsyncThunk(
+    'vehicle/deleteVehicle',
+    async (id: string) => {
+        try {
+            const resp = await api.delete(`/delete/${id}`)
+            return resp.data
+        } catch (e) {
+            throw new Error('error in delete vehicle: ' + e)
+        }
+    }
+)
+
 const VehicleSlice = createSlice({
     name: 'vehicle',
-    initialState: initialState,
-    reducers: {
-        add_vehicle: (state, action) => {
-            state.push(action.payload)
-        },
-        update_vehicle: (state, action) => {
-            const vehicle = state.find(vehicle => vehicle.vehicleID === action.payload.vehicleID)
-            if (vehicle) Object.assign(vehicle, { ...action.payload })
-        },
-        delete_vehicle: (state, action) => {
-            return state.filter(vehicle =>
-                vehicle.vehicleID !== action.payload.vehicleID
-            )
-        }
+    initialState: {
+        vehicleList: [],
+        vehicleCountList: [],
+        status: "idle"
+    },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getAllVehicles.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.vehicleList = action.payload
+            })
+            .addCase(getAllVehicles.rejected, (state, action) => {
+                state.status = "failed"
+                console.log('rejected get all vehicles: ', action.payload)
+            })
+            .addCase(getAllVehicles.pending, (state, action) => {
+                state.status = "loading"
+                console.log('pending get all vehicles')
+            })
+        builder
+            .addCase(getVehicleCount.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.vehicleCountList = action.payload
+            })
+            .addCase(getVehicleCount.rejected, (state, action) => {
+                state.status = "failed"
+                console.log('rejected get all vehicles: ', action.payload)
+            })
+            .addCase(getVehicleCount.pending, (state, action) => {
+                state.status = "loading"
+                console.log('pending get all vehicles')
+            })
+        builder
+            .addCase(saveVehicle.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.vehicleList.push(action.payload)
+                getAllVehicles()
+            })
+            .addCase(saveVehicle.rejected, (state, action) => {
+                state.status = "failed"
+                console.log('rejected save vehicle: ', action.payload)
+            })
+            .addCase(saveVehicle.pending, (state, action) => {
+                state.status = "loading"
+                console.log('pending save vehicle')
+            })
+        builder
+            .addCase(updateVehicle.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                const vehicle = state.vehicleList.find((v: Vehicle) => v.vehicleID === action.payload.vehicleID)
+                if (vehicle) Object.assign(vehicle, action.payload)
+            })
+            .addCase(updateVehicle.rejected, (state, action) => {
+                state.status = "failed"
+                console.log('rejected update vehicle: ', action.payload)
+            })
+            .addCase(updateVehicle.pending, (state, action) => {
+                state.status = "loading"
+                console.log('pending update vehicle')
+            })
+        builder
+            .addCase(deleteVehicle.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.vehicleList = state.vehicleList.filter((v: Vehicle) => v.vehicleID !== action.payload.vehicleID)
+            })
+            .addCase(deleteVehicle.rejected, (state, action) => {
+                state.status = "failed"
+                console.log('rejected delete vehicle: ', action.payload)
+            })
+            .addCase(deleteVehicle.pending, (state, action) => {
+                state.status = "loading"
+                console.log('pending delete vehicle')
+            })
     }
 })
 
-export const { add_vehicle, update_vehicle, delete_vehicle} = VehicleSlice.actions
 export default VehicleSlice.reducer
