@@ -27,10 +27,15 @@ export default function UpdateField() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const fieldLocation = `${latitude}, ${longitude}`
-        const newField = new Field(fieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
-        dispatch(update_field({...newField}))
-        navigate('/field')
+        if (!(fieldName === "" || fieldAddress === "" || latitude === "" || longitude === "" || fieldSize === "")) {
+            const fieldLocation = `${latitude}, ${longitude}`
+            const newField = new Field(fieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
+            dispatch(update_field({...newField}))
+            setTimeout(() => {
+                navigate('/field')
+            }, 301)
+            return true
+        }
     }
 
     function handleDelete(event: React.SyntheticEvent) {

@@ -4,26 +4,30 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import Vehicle from "../../models/Vehicle.ts";
 import generateID from "../../util/GenerateID.ts";
-import {add_vehicle} from "../../reducers/VehicleSlice.ts";
+import {saveVehicle} from "../../reducers/VehicleSlice.ts";
+import { AppDispatch } from "../../store/Store.ts";
 
 export default function AddVehicle() {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [vehicleType, setVehicleType] = useState('')
     const [fuelType, setFuelType] = useState('')
     const [status, setStatus] = useState('')
-    const [licenceNumber, setLicenceNumber] = useState('')
+    const [licenseNumber, setLicenseNumber] = useState('')
     const [remarks, setRemarks] = useState('')
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
+        if (!(licenseNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
             const genVehicleID = generateID("VEHICLE")
-            const newVehicle = new Vehicle(genVehicleID, licenceNumber, vehicleType, fuelType, remarks, status, 10)
-            dispatch(add_vehicle({...newVehicle}))
-            navigate('/staff')
+            const newVehicle = new Vehicle(genVehicleID, licenseNumber, vehicleType, fuelType, remarks, status)
+            dispatch(saveVehicle({...newVehicle}))
+            setTimeout(() => {
+                navigate('/staff')
+            }, 301)
+            return true
         }
     }
 
@@ -38,7 +42,7 @@ export default function AddVehicle() {
                 setVehicleType={setVehicleType}
                 setFuelType={setFuelType}
                 setVehicleStatus={setStatus}
-                setLicence={setLicenceNumber}
+                setLicense={setLicenseNumber}
                 setRemarks={setRemarks}
                 handleCancel={handleCancel}
                 handleSave={handleSubmit}

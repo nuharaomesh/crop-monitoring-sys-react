@@ -3,17 +3,18 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
 import Vehicle from "../../models/Vehicle.ts";
-import {delete_vehicle, update_vehicle} from "../../reducers/VehicleSlice.ts";
+import {updateVehicle, deleteVehicle} from "../../reducers/VehicleSlice.ts";
 import Swal from "sweetalert2";
+import { AppDispatch } from "../../store/Store.ts";
 
 export default function UpdateVehicle() {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const { id } = useParams<{id: string}>()
 
     const currentVehicle = useSelector((state) =>
-        state.vehicle.find((v: Vehicle) => v.vehicleID === id)
+        state.vehicle.vehicleList.find((v: Vehicle) => v.vehicleID === id)
     )
 
     const [vehicleCode, setVehicleCode] = useState(currentVehicle?.vehicleID)
@@ -27,8 +28,11 @@ export default function UpdateVehicle() {
         event.preventDefault()
         if (!(licenceNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
             const updatedVehicle = new Vehicle(vehicleCode, licenceNumber, vehicleType, fuelType, remarks, status, 10)
-            dispatch(update_vehicle({...updatedVehicle}))
-            navigate('/staff')
+            dispatch(updateVehicle({...updatedVehicle}))
+            setTimeout(() => {
+                navigate('/staff')
+            }, 301)
+            return true
         }
     }
 
@@ -52,7 +56,7 @@ export default function UpdateVehicle() {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(delete_vehicle({...currentVehicle}))
+                dispatch(deleteVehicle(vehicleCode))
                 navigate('/staff')
             }
         });

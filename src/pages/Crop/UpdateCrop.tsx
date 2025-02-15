@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useState} from "react";
 import {Crop} from "../../models/Crop.ts";
 import {delete_crop, update_crop} from "../../reducers/CropSlice.ts";
+import Swal from "sweetalert2";
 
 export default function UpdateCrop() {
 
@@ -25,15 +26,40 @@ export default function UpdateCrop() {
 
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        const updatedCrop = new Crop(cropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
-        dispatch(update_crop({...updatedCrop}))
-        navigate('/crop')
+        if (!(cropName === "" || cropScientificName === "" || cropCategories === "" || cropSeason === "" || cropGrowthTime === "")) {
+            const updatedCrop = new Crop(cropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropImage)
+            dispatch(update_crop({...updatedCrop}))
+            setTimeout(() => {
+                navigate('/crop')
+            }, 301)
+            return true
+        }
     }
 
     function handleDelete(event: React.SyntheticEvent) {
         event.preventDefault()
-        dispatch(delete_crop({...currentCrop}))
-        navigate('/crop')
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to undo this!",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "white",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            width: "600px",
+            customClass: {
+                popup: "custom-popup",
+                icon: "custom-icon",
+                title: "custom-title",
+                confirmButton: "custom-confirm-btn",
+                cancelButton: "custom-cancel-btn"
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(delete_crop({...currentCrop}))
+                navigate('/crop')
+            }
+        });
     }
 
     function handleCancel() {

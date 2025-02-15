@@ -3,13 +3,14 @@ import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Staff from "../../models/Staff.ts";
-import {delete_staff, update_staff} from "../../reducers/StaffSlice.ts";
+import {updateStaff, deleteStaff} from "../../reducers/StaffSlice.ts";
 import Swal from 'sweetalert2';
+import {AppDispatch} from "../../store/Store.ts";
 
 export default function UpdateStaff() {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const { id } = useParams<{id: string}>()
 
     const currentStaff = useSelector((state) =>
@@ -32,9 +33,12 @@ export default function UpdateStaff() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === 0 || email === "" || role === "" || status === undefined)) {
-            const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status, 10)
-            dispatch(update_staff({...updatedStaff}))
-            navigate('/staff')
+            const updatedStaff = new Staff(staffID, firstname, lastname, gender, email, role, address, joinedDate, dob, "", String(phone), staffImg, status)
+            dispatch(updateStaff({...updatedStaff}))
+            setTimeout(() => {
+                navigate('/staff')
+            }, 301)
+            return true
         }
     }
 
@@ -58,7 +62,7 @@ export default function UpdateStaff() {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(delete_staff({ ...currentStaff }));
+                dispatch(deleteStaff(currentStaff.staffID));
                 navigate('/staff');
             }
         });
@@ -79,7 +83,7 @@ export default function UpdateStaff() {
                 setSelectedFieldType={setGender}
                 setStaffImage={setStaffImg}
                 setDob={setDob}
-                setJoindeDate={setJoinedDate}
+                setJoinedDate={setJoinedDate}
                 setAddress={setAddress}
                 setPhoneNo={setPhone}
                 setEmail={setEmail}
