@@ -14,8 +14,8 @@ export default function VehicleCard(props) {
                 <div className="vehicle-card-status w-1/5">
                     <h1 className="text-sm text-green-500 truncate">{props.status}</h1>
                 </div>
-                <div className="vehicle-card-licence-no w-1/5">
-                    <h1 className="text-sm text-gray-500 truncate">{props.licenceNumber}</h1>
+                <div className="vehicle-card-license-no w-1/5">
+                    <h1 className="text-sm text-gray-500 truncate">{props.licenseNumber}</h1>
                 </div>
             </div>
             <div

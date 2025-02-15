@@ -9,7 +9,7 @@ export default function CropCard(props) {
                     <img src={props.cropImg} alt="" className="crop-card-img"/>
                 </div>
                 <div
-                    className="absolute right-8 top-1/4 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+                    className="absolute right-8 top-44 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
                     <Link to={`/crop/updateCrop/${props.cropCode}`}
                           className="flex w-11 h-11 rounded-full text-sm py-2 px-4 justify-center items-center card-update-btn crop-update-btn-pos">
                         <BsFillPenFill color="green" size="18"/>

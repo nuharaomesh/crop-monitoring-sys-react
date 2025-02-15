@@ -1,7 +1,6 @@
 export default class Staff {
     staffID: string
-    firstname: string
-    lastname: string
+    name: string
     gender: string
     email: string
     role: string
@@ -9,15 +8,13 @@ export default class Staff {
     joinedDate: string
     dob: string
     designation: string
-    phone: string
-    staffImg: string | null
+    phone: number
+    img: string | null
     status: string
-    count: number
 
-    constructor(staffID: string, firstname: string, lastname: string, gender: string, email: string, role: string, address: string, joinedDate: string, dob: string, designation: string, phone: string, staffImg: string | null, status: string, count: number) {
+    constructor(staffID: string, name: string, gender: string, email: string, role: string, address: string, joinedDate: string, dob: string, designation: string, phone: number, img: string | null, status: string) {
         this.staffID = staffID
-        this.firstname = firstname
-        this.lastname = lastname
+        this.name = name
         this.gender = gender
         this.email = email
         this.role = role
@@ -26,8 +23,7 @@ export default class Staff {
         this.dob = dob
         this.designation = designation
         this.phone = phone
-        this.staffImg = staffImg
+        this.img = img
         this.status = status
-        this.count = count
     }
 }

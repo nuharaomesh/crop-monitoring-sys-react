@@ -1,14 +1,20 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import VehicleCard from "../Cards/VehicleCard.tsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Vehicle from "../../models/Vehicle.ts";
 import {useEffect, useState} from "react";
+import { getAllVehicles } from "../../reducers/VehicleSlice.ts";
+import { AppDispatch } from "../../store/Store.ts";
 
 export default function VehicleList() {
 
-    const vehicles = useSelector(state => state.vehicle)
-    const [searchValue, setSearchValue] = useState('')
+    const dispatch = useDispatch<AppDispatch>()
+    const vehicles = useSelector((state) => state.vehicle.vehicleList)
+    useEffect(() => {
+        dispatch(getAllVehicles())
+    }, [dispatch])
+    const [searchValue, setSearchValue] = useState("")
     const [filteredVehicle, setFilteredVehicle] = useState<[]>([])
 
     useEffect(() => {
@@ -17,7 +23,7 @@ export default function VehicleList() {
                 v.category.toLowerCase().includes(searchValue)
             )
         )
-    }, [searchValue]);
+    }, [searchValue, vehicles]);
 
     return (
         <section className="vehicle-list">
@@ -40,16 +46,16 @@ export default function VehicleList() {
                                          vehicleType={v.category}
                                          fuelType={v.fuelType}
                                          status={v.status}
-                                         licenceNumber={v.licencePlate}
+                                         licenseNumber={v.licensePlate}
                             />
                         ))
-                    ) : (vehicles.map((vehicle: Vehicle) =>
+                    ) : (vehicles.map((vehicle: Vehicle) =>        
                         <VehicleCard key={vehicle.vehicleID}
                                      vehicleID={vehicle.vehicleID}
                                      vehicleType={vehicle.category}
                                      fuelType={vehicle.fuelType}
                                      status={vehicle.status}
-                                     licenceNumber={vehicle.licencePlate}
+                                     licenseNumber={vehicle.licensePlate}
                         />
                     ))}
                 </div>

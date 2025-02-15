@@ -3,13 +3,13 @@ import {useForm} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {TiWarning} from "react-icons/ti";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 const validationSchema = Yup.object({
     vehicle_type: Yup.string().required("Vehicle type is required"),
     fuel_type: Yup.string().required("Vehicle fuel is required"),
     status: Yup.string().required("Enter vehicle current status"),
-    licence_number: Yup.string().required("Licence number is required"),
+    license_number: Yup.string().required("License number is required"),
     vehicle_remarks: Yup.string().required("Remarks is required")
 });
 
@@ -39,15 +39,15 @@ export default function VehicleForm(props) {
     } = useForm({
         resolver: yupResolver(validationSchema),
     });
-
     const onSubmit = () => console.log();
 
     function handleInnerSubmit(e) {
-        setIsVisible(false)
         setTimeout(() => {
-            if (props.handleCancel) {
+            if (props.handleSave) {
                 handleSubmit(onSubmit)()
-                props.handleSave(e);
+                if (props.handleSave(e)) {
+                    setIsVisible(false)
+                }
             }
         }, 300);
     }
@@ -89,8 +89,8 @@ export default function VehicleForm(props) {
                                        onChange={(e) => props.setFuelType(e.target.value)}/>
                                 {errors.fuel_type?.message && <p className="form-error">{errors.fuel_type?.message} <TiWarning color="red" /></p>}
                                 <datalist id="fuelTypes">
-                                    <option value="Petrol">Petrol</option>
-                                    <option value="Diesel">Diesel</option>
+                                    <option value="PETROL">Petrol</option>
+                                    <option value="DIESEL">Diesel</option>
                                 </datalist>
                             </div>
                             <div>
@@ -102,19 +102,19 @@ export default function VehicleForm(props) {
                                        onChange={(e) => props.setVehicleStatus(e.target.value)}/>
                                 {errors.status?.message && <p className="form-error">{errors.status?.message} <TiWarning color="red" /></p>}
                                 <datalist id="vhStatus">
-                                    <option value="Active">Active</option>
-                                    <option value="Available">Available</option>
-                                    <option value="Not Available">Not available</option>
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="AVAILABLE">Available</option>
+                                    <option value="NOT_AVAILABLE">Not available</option>
                                 </datalist>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="licence_num" className="form-label">Vehicle licence number</label>
-                                <input type="text" id="licence_num" className="form-control" placeholder="Enter vehicle licence number"
-                                       {...register("licence_number")}
-                                       onChange={(e) => props.setLicence(e.target.value)}
-                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.licencePlate : props.licencePlate}
+                                <label htmlFor="license_num" className="form-label">Vehicle license number</label>
+                                <input type="text" id="license_num" className="form-control" placeholder="Enter vehicle license number"
+                                       {...register("license_number")}
+                                       onChange={(e) => props.setLicense(e.target.value)}
+                                       defaultValue={props.title?.startsWith("Update") ? props.vehicle?.licensePlate : props.licencePlate}
                                 />
-                                {errors.licence_number?.message && <p className="form-error">{errors.licence_number?.message} <TiWarning color="red" /></p>}
+                                {errors.license_number?.message && <p className="form-error">{errors.license_number?.message} <TiWarning color="red" /></p>}
                             </div>
                             <div>
                                 <label htmlFor="vehicle_remarks" className="form-label">Vehicle remarks</label>

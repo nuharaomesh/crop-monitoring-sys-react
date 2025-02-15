@@ -7,7 +7,6 @@ import Field from "./pages/Field/Field.tsx";
 import Crop from "./pages/Crop/Crop.tsx";
 import Staff from "./pages/Staff/Staff.tsx";
 import Insights from "./pages/Insights.tsx";
-import Settings from "./pages/Settings.tsx";
 import CultivateForm from "./components/Cultivate/CultivateForm.tsx";
 import AddCrop from "./pages/Crop/AddCrop.tsx";
 import UpdateCrop from "./pages/Crop/UpdateCrop.tsx";
@@ -52,7 +51,6 @@ function App() {
                     ]
                 },
                 { path: '/insights', element: <Insights/> },
-                { path: '/settings', element: <Settings/> },
             ]
         }
     ])
