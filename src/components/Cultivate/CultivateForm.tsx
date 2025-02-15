@@ -6,11 +6,13 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Crop} from "../../models/Crop.ts";
 import {FaDeleteLeft} from "react-icons/fa6";
-import {Staff} from "../../models/Staff.ts";
+import Staff from "../../models/Staff.ts";
 import {Cultivate} from "../../models/Cultivate.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import generateID from "../../util/GenerateID.ts";
 import {add_cultivation} from "../../reducers/CultivatedSlice.ts";
+import {Field} from "../../models/Field.ts";
+import {RootState} from "../../store/Store.ts";
 
 export default function CultivateForm() {
 
@@ -20,42 +22,39 @@ export default function CultivateForm() {
     const [isCropSelected, setIsCropSelected] = useState<boolean>(false)
     const [selectedModalType, setSelectedModalType] = useState<'staff' | 'crop'>('crop')
     const { id } = useParams<{id: string}>()
-    const selectedCrop = useSelector(state =>
-        state.crop.find((c: Crop) => c.cropCode === cropCode)
-    )
-    const filteredStaff = useSelector((state) =>
-        state.staff.filter((staff: Staff) => staffs.includes(staff.staffID))
-    )
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const selectedField = useSelector((state: RootState) =>
+        state.field.find((f: Field)=> f.fieldCode === id)
+    )
+    const selectedCrop = useSelector((state: RootState) =>
+        state.crop.find((c: Crop) => c.cropCode === cropCode)
+    )
+    const filteredStaff = useSelector((state: RootState) =>
+        state.staff.filter((staff: Staff) => staffs.includes(staff.staffID))
+    )
 
     function assignStaff(id: string) {
         setStaffs([...staffs, id])
     }
-
     function removeStaff(id: string) {
         setStaffs(staffs.filter((staff) => staff !== id));
     }
-
     function handleSelectOnClose() {
         setIsCropSelected(true)
         handleCloseModal()
     }
-
     function handleOpenCropModal() {
         setSelectedModalType('crop')
         setIsModalOpen(true)
     }
-
     function handleOpenStaffModal() {
         setSelectedModalType('staff')
         setIsModalOpen(true)
     }
-
     function handleCloseModal() {
         setIsModalOpen(false)
     }
-
     function handleSubmit() {
         const genCultivateID = generateID('CULTIVATE')
         const newCultivate = new Cultivate(genCultivateID, cropCode, String(id), staffs)
@@ -77,35 +76,35 @@ export default function CultivateForm() {
                 <div className="cultivate-modal-content-body">
                     <div className="field-details-holder">
                         <div className="field-details-img-holder">
-                            <img src="../../../public/download.jpeg" alt="" className="field-details-img"/>
+                            <img src={String(selectedField?.fieldImg)} alt="" className="field-details-img"/>
                         </div>
                         <div className="field-details">
-                            <h1 className="card-title">Grepo egers</h1>
-                            <p className="uncult-card-size">12 Sq.mt <AiOutlineExpand/></p>
-                            <p className="uncult-card-address">Horana <AiFillPushpin color={"red"}/></p>
+                            <h1 className="card-title">{selectedField?.fieldName}</h1>
+                            <p className="uncult-card-size">{selectedField?.fieldSize} Sq.mt <AiOutlineExpand/></p>
+                            <p className="uncult-card-address">{selectedField?.fieldAddress} <AiFillPushpin color={"red"}/></p>
                         </div>
                     </div>
                     <div className="crop-details-holder relative group">
                         <div className="crop-details-img-holder">
-                            <img src={isCropSelected ? selectedCrop.cropImg : "../../../public/images.png" } alt="" className="crop-details-img"/>
+                            <img src={isCropSelected ? String(selectedCrop?.cropImg) : "../../../public/images.png" } alt="" className="crop-details-img"/>
                         </div>
                         <div className="crop-details">
                             <div>
                                 {isCropSelected ? (
                                     <div>
-                                        <h1 className="card-title">{selectedCrop.cropName}</h1>
+                                        <h1 className="card-title">{selectedCrop?.cropName}</h1>
                                         <div>
                                             <label htmlFor="" className="card-label">Growth time</label>
-                                            <p className="crop-card-time">{selectedCrop.cropGrowthTime}</p>
+                                            <p className="crop-card-time">{selectedCrop?.cropGrowthTime}</p>
                                         </div>
                                         <div className="flex gap-4">
                                             <div>
                                                 <label htmlFor="" className="card-label">season</label>
-                                                <p className="season-title">{selectedCrop.cropSeason}</p>
+                                                <p className="season-title">{selectedCrop?.cropSeason}</p>
                                             </div>
                                             <div>
                                                 <label htmlFor="" className="card-label">category</label>
-                                                <p className="crop-card-cat">{selectedCrop.category}</p>
+                                                <p className="crop-card-cat">{selectedCrop?.category}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -139,8 +138,8 @@ export default function CultivateForm() {
                                 <StaffCard key={s.staffID}
                                            removeble={true}
                                            staffID={s.staffID}
-                                           img={s.staffImg}
-                                           name={`${s.firstname} ${s.lastname}`}
+                                           img={s.img}
+                                           name={s.name}
                                            role={s.role}
                                            stat={s.status}
                                            phone={s.phone}
