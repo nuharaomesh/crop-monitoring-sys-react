@@ -15,12 +15,12 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "../../components/ui/chart"
-import {useSelector} from "react-redux";
-import VehicleModel from "../../models/Vehicle.ts";
+import {useDispatch, useSelector} from "react-redux";
 import StaffModel from "../../models/Staff.ts";
 import {useEffect, useState} from "react";
-import {RootState} from "../../store/Store.ts";
+import {AppDispatch, RootState} from "../../store/Store.ts";
 import {Outlet} from "react-router-dom";
+import { getAllVehicles, getVehicleCount } from "../../reducers/VehicleSlice.ts";
 
 const chartConfig = {} satisfies ChartConfig
 interface vehicleGraphData {
@@ -36,17 +36,24 @@ interface staffGraphData {
 
 export default function Staff() {
 
+    const dispatch = useDispatch<AppDispatch>()    
+    useEffect(() => {
+        dispatch(getVehicleCount())
+    }, [dispatch])
+
     const [vehicleGraphData, setVehicleGraphData] = useState<vehicleGraphData []>([])
     const [staffGraphData, setStaffGraphData] = useState<staffGraphData []>([])
-    const vehicles: VehicleModel[] = useSelector((state: RootState): VehicleModel[] => state.vehicle)
+    const vehicles = useSelector((state: RootState) => state.vehicle.vehicleCountList)
+    const vehicleList = useSelector(state => state.vehicle.vehicleList)
     const staffs: StaffModel[] = useSelector((state: RootState): StaffModel[] => state.staff)
 
-    useEffect(() => {
+    useEffect(() => {    
         setVehicleGraphData(
-            vehicles.map((v: VehicleModel, index: number)=> ({
+            vehicles.map((v , index: number)=> ({
                 vehicle: v.category,
-                count: 10,
+                count: v._count.category,
                 fill: `${index % 2 === 0 ? "#2563eb" : "#60a5fa" }`
+                
             }))
         )
         setStaffGraphData(
@@ -56,7 +63,7 @@ export default function Staff() {
                 fill: `${index % 2 === 0 ? "#2563eb" : "#60a5fa" }`
             }))
         )
-    }, [staffs, vehicles]);
+    }, [staffs, vehicles, vehicleList, dispatch]);
 
     const totalVehicleCount = React.useMemo(() => {
         return vehicleGraphData.reduce((acc, curr) => acc + curr.count, 0)
@@ -120,7 +127,7 @@ export default function Staff() {
                                                                     y={(viewBox.cy || 0) + 24}
                                                                     className="fill-muted-foreground"
                                                                 >
-                                                                    Visitors
+                                                                    Staff
                                                                 </tspan>
                                                             </text>
                                                         )
