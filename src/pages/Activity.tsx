@@ -51,18 +51,18 @@ export default function Activity() {
             <div className="activity-details">
                 <div className="activity-more">
                     <div className="blank-2 custom-layout">
-
+                        Whether
                     </div>
                     <div className="used-props-details custom-layout">
-
+                        pest warnings
                     </div>
                 </div>
                 <div className="cultivated-fields custom-layout">
                     <div>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Line Chart - Dots</CardTitle>
-                                <CardDescription>January - June 2024</CardDescription>
+                                <CardTitle>Cultivation progress over year</CardTitle>
+                                <CardDescription>2024</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <ChartContainer config={chartConfig}>
@@ -103,7 +103,7 @@ export default function Activity() {
                             </CardContent>
                             <CardFooter className="flex-col items-start gap-2 text-sm">
                                 <div className="flex gap-2 font-medium leading-none">
-                                    Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+                                    Track your progress <TrendingUp className="h-4 w-4" />
                                 </div>
                             </CardFooter>
                         </Card>
