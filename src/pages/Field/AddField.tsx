@@ -2,14 +2,15 @@ import FieldForm from "../../components/Field/FieldForm.tsx";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import React, {useState} from "react";
-import {Field} from "../../models/Field.ts";
-import {add_field} from "../../reducers/FieldSlice.ts";
+import FieldModel from "../../models/Field.ts";
+import {saveField} from "../../reducers/FieldSlice.ts";
 import generateID from "../../util/GenerateID.ts";
+import { AppDispatch } from "../../store/Store.ts";
 
 export default function AddField() {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [fieldName, setFieldName] = useState('')
     const [fieldAddress, setFieldAddress] = useState('')
@@ -24,8 +25,8 @@ export default function AddField() {
         if (!(fieldName === "" || fieldAddress === "" || latitude === 0 || longitude === 0 || fieldSize === "")) {
             const genFieldCode = generateID("FIELD")
             const fieldLocation = `${latitude}, ${longitude}`
-            const newField = new Field(genFieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
-            dispatch(add_field({...newField}))
+            const newField = new FieldModel(genFieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
+            dispatch(saveField({...newField}))
             setTimeout(() => {
                 navigate('/field')
             }, 301)

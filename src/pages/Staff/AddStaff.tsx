@@ -30,7 +30,6 @@ export default function AddStaff() {
             const genStaffID = generateID("STAFF")
             const newStaff = new Staff(genStaffID, `${firstname + " " + lastname}`, gender, email, role, address, joinedDate, dob, "ACTIVE", Number(phone), staffImg, status)
             dispatch(saveStaff({...newStaff}))
-            console.log(staffImg);
             setTimeout(() => {
                 navigate('/staff')
             }, 301)

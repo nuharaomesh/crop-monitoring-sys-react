@@ -1,12 +1,30 @@
 import Searchbar from "../Searchbar.tsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import UncultivatedCard from "../Cards/UncultivatedCard.tsx";
+import {useEffect, useState} from "react";
+import FieldModel from "../../models/Field.ts";
+import {AppDispatch} from "../../store/Store.ts";
+import {getAllFields} from "../../reducers/FieldSlice.ts";
 
 export default function UncultivatedFieldList() {
 
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+        dispatch(getAllFields())
+    }, [dispatch]);
     const fields = useSelector(state =>
-        state.field.filter((field) => !field.isCultivated)
+        state.field.fieldList.filter((field) => !field.fieldNowCultivated)
     )
+    const [searchValue, setSearchValue] = useState("")
+    const [filteredFields, setFilteredFields] = useState<[]>([])
+
+    useEffect(() => {
+        setFilteredFields(
+            fields.filter((f: FieldModel) =>
+                f.fieldName.toLowerCase().includes(searchValue)
+            )
+        )
+    }, [searchValue]);
 
     return (
         <>
@@ -16,19 +34,29 @@ export default function UncultivatedFieldList() {
                     <p className="field-sub-title">Choose a field for next Cultivation</p>
                 </div>
                 <div className="">
-                    <Searchbar/>
+                    <Searchbar searchValue={setSearchValue}/>
                 </div>
             </div>
             <div className="uncultivated-field-body custom-list-cards">
-                {fields.map((field) =>
+                {!(searchValue === "") ? (
+                        filteredFields.map((f: FieldModel) => (
+                            <UncultivatedCard key={f.fieldCode}
+                                              fieldCode={f.fieldCode}
+                                              img={f.img}
+                                              fieldName={f.fieldName}
+                                              fieldSize={f.fieldSize}
+                                              fieldAddress={f.fieldAddress}
+                            />
+                        ))
+                    ) : (fields.map((field: FieldModel) =>
                     <UncultivatedCard key={field.fieldCode}
                                       fieldCode={field.fieldCode}
-                                      img={field.fieldImg}
+                                      img={field.img}
                                       fieldName={field.fieldName}
                                       fieldSize={field.fieldSize}
                                       fieldAddress={field.fieldAddress}
                     />
-                )}
+                ))}
             </div>
         </>
     )

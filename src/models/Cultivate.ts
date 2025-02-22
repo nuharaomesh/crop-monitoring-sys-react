@@ -1,13 +1,11 @@
 export class Cultivate {
-    cultivateID: string
     cropCode: string
-    filedCode: string
+    fieldCode: string
     staffs: string[]
 
-    constructor(cultivateID: string, cropCode: string, filedCode: string, staffs: string[]) {
-        this.cultivateID = cultivateID
+    constructor(cropCode: string, fieldCode: string, staffs: string[]) {
         this.cropCode =cropCode
-        this.filedCode = filedCode
+        this.fieldCode = fieldCode
         this.staffs = staffs
     }
 }

@@ -11,7 +11,7 @@ export default function StaffList() {
 
     const dispatch = useDispatch<AppDispatch>()
     const [searchValue, setSearchValue] = useState("")
-    const staffs: Staff[] = useSelector(state => state.staff)
+    const staffs: Staff[] = useSelector(state => state.staff.staffList)
     const [filteredStaff, setFilteredStaff] = useState<Staff[]>([])
 
     useEffect(() => {

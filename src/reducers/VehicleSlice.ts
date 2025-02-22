@@ -1,16 +1,12 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {Vehicle} from "../models/Vehicle.ts";
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: "http://localhost:3000/api/vehicle"
-})
+import VehicleModel from "../models/Vehicle.ts";
+import api from "../api/api.ts";
 
 export const getAllVehicles = createAsyncThunk(
     'vehicle/getAllVehicle',
     async () => {
         try {
-            const resp = await api.get('/get')            
+            const resp = await api.get('/vehicle/get')            
             return resp.data
         } catch (e) {
             throw new Error('error in get all vehicles: ' + e)
@@ -22,7 +18,7 @@ export const getVehicleCount = createAsyncThunk(
     'vehicle/getVehicleCount',
     async () => {
         try {
-            const resp = await api.get('/get_count')
+            const resp = await api.get('/vehicle/get_count')
             return resp.data
         } catch (e) {
             throw new Error('error in get vehicle count: ' + e)
@@ -32,9 +28,9 @@ export const getVehicleCount = createAsyncThunk(
 
 export const saveVehicle = createAsyncThunk(
     'vehicle/saveVehicle',
-    async (vehicle: Vehicle) => {
+    async (vehicle: VehicleModel) => {
         try {
-            const resp = await api.post('/save', vehicle)
+            const resp = await api.post('/vehicle/save', vehicle)
             return resp.data
         } catch (e) {
             throw new Error('error in save vehicle: ' + e)
@@ -44,9 +40,9 @@ export const saveVehicle = createAsyncThunk(
 
 export const updateVehicle = createAsyncThunk(
     'vehicle/updateVehicle',
-    async (vehicle: Vehicle) => {
+    async (vehicle: VehicleModel) => {
         try {
-            const resp = await api.put(`/update/${vehicle.vehicleID}`, vehicle)
+            const resp = await api.put(`/vehicle/update/${vehicle.vehicleID}`, vehicle)
             return resp.data
         } catch (e) {
             throw new Error('error in update vehicle: ' + e)
@@ -58,7 +54,7 @@ export const deleteVehicle = createAsyncThunk(
     'vehicle/deleteVehicle',
     async (id: string) => {
         try {
-            const resp = await api.delete(`/delete/${id}`)
+            const resp = await api.delete(`/vehicle/delete/${id}`)
             return resp.data
         } catch (e) {
             throw new Error('error in delete vehicle: ' + e)
@@ -105,7 +101,6 @@ const VehicleSlice = createSlice({
             .addCase(saveVehicle.fulfilled, (state, action) => {
                 state.status = "succeeded"
                 state.vehicleList.push(action.payload)
-                getAllVehicles()
             })
             .addCase(saveVehicle.rejected, (state, action) => {
                 state.status = "failed"
@@ -118,7 +113,7 @@ const VehicleSlice = createSlice({
         builder
             .addCase(updateVehicle.fulfilled, (state, action) => {
                 state.status = "succeeded"
-                const vehicle = state.vehicleList.find((v: Vehicle) => v.vehicleID === action.payload.vehicleID)
+                const vehicle = state.vehicleList.find((v: VehicleModel) => v.vehicleID === action.payload.vehicleID)
                 if (vehicle) Object.assign(vehicle, action.payload)
             })
             .addCase(updateVehicle.rejected, (state, action) => {
@@ -132,7 +127,7 @@ const VehicleSlice = createSlice({
         builder
             .addCase(deleteVehicle.fulfilled, (state, action) => {
                 state.status = "succeeded"
-                state.vehicleList = state.vehicleList.filter((v: Vehicle) => v.vehicleID !== action.payload.vehicleID)
+                state.vehicleList = state.vehicleList.filter((v: VehicleModel) => v.vehicleID !== action.payload.vehicleID)
             })
             .addCase(deleteVehicle.rejected, (state, action) => {
                 state.status = "failed"

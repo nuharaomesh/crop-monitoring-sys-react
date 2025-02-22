@@ -1,3 +1,5 @@
+import { object } from "yup"
+
 export default class Staff {
     staffID: string
     name: string
@@ -9,10 +11,10 @@ export default class Staff {
     dob: string
     designation: string
     phone: number
-    img: string | null
+    img: string | null | object
     status: string
 
-    constructor(staffID: string, name: string, gender: string, email: string, role: string, address: string, joinedDate: string, dob: string, designation: string, phone: number, img: string | null, status: string) {
+    constructor(staffID: string, name: string, gender: string, email: string, role: string, address: string, joinedDate: string, dob: string, designation: string, phone: number, img: string | null | object, status: string) {
         this.staffID = staffID
         this.name = name
         this.gender = gender

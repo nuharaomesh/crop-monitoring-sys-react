@@ -2,23 +2,46 @@ import {Link, Outlet, useLocation} from "react-router-dom";
 import Searchbar from "../Searchbar.tsx";
 import FieldCard from "../Cards/FieldCard.tsx";
 import FieldMap from "../FieldMap.tsx";
-import {useSelector} from "react-redux";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import FieldModel from "../../models/Field.ts";
+import { getAllFields } from "../../reducers/FieldSlice.ts";
+import {AppDispatch} from "../../store/Store.ts";
+import {getAllCultivations} from "../../reducers/CultivatedSlice.ts";
+import {getAllCrops} from "../../reducers/CropSlice.ts";
 
 export default function FieldList() {
 
     const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>()
     const fields = useSelector(state =>
-        state.field.filter((field) => !field.isCultivated)
+        state.field.fieldList.filter((field: FieldModel) => !field.fieldNowCultivated)
     )
-    const cultivated = useSelector(state => state.cultivate)
+    useEffect(() => {
+        dispatch(getAllFields())
+        dispatch(getAllCrops())
+        dispatch(getAllCultivations())
+    }, [dispatch])
+    const cultivated = useSelector(state => state.cultivate.cultivationList)
     const [selectedFieldType, setSelectedFieldType] = useState<"cultivated" | "uncultivated">("uncultivated");
     const handleSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFieldType(event.target.value as "cultivated" | "uncultivated");
     };
-    const [mapLat, setMapLat] = useState(6.9271);
+    
+    const [mapLat, setMapLat] = useState(23.23);
     const [mapLng, setMapLng] = useState(79.8612);
+    
+    useEffect(() => {
+        if (fields[0]) {
+            const location = fields[0]?.fieldLocation as string
+            const [currentLatitude, currentLongitude] = location.split(',').map(coord => parseFloat(coord.trim()));
+            
+            setMapLat(currentLatitude)
+            setMapLng(currentLongitude)
+        }
+    }, [fields[0]])
 
+    const [searchValue, setSearchValue] = useState("")
     function handleFieldClick(lat: number, lng: number) {
         setMapLat(lat);
         setMapLng(lng);
@@ -27,7 +50,7 @@ export default function FieldList() {
     return (
         <>
             <div className="field-container-header custom-layout">
-                <div className="list-header-title">
+                <div className="list-header-title custom-width">
                     <h1 className="list-title">Manage your fields</h1>
                     <Link to='/field/addField' className="custom-persist-btn">Add new</Link>
                 </div>
@@ -40,7 +63,7 @@ export default function FieldList() {
                             <p className="field-sub-title">search the field you looking for</p>
                         </div>
                         <div className="flex gap-4">
-                            <Searchbar/>
+                            <Searchbar searchValue={setSearchValue}/>
                             <div className="flex items-center space-x-4">
                                 <label className="flex items-center space-x-2">
                                     <input type="radio" name="fieldType" value="cultivated" className="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" checked={selectedFieldType === "cultivated"}
@@ -63,23 +86,20 @@ export default function FieldList() {
                             (fields.map(field => (
                                 <FieldCard key={field.fieldCode}
                                            fieldCode={field.fieldCode}
-                                           fieldImg={field.fieldImg}
+                                           fieldImg={field.img}
                                            fieldName={field.fieldName}
                                            fieldSize={field.fieldSize}
                                            fieldAddress={field.fieldAddress}
-                                           cultivated={false}
+                                           cultivated={field.fieldNowCultivated}
                                            onFieldClick={handleFieldClick}
                                            fieldLocation={field.fieldLocation}
                                 />
                             ))) :
-                            (cultivated.map(cultivate => (
-                                <FieldCard key={cultivate.fieldCode}
-                                           fieldCode={cultivate.fieldCode}
-                                           fieldImg={cultivate.fieldImg}
-                                           fieldName={cultivate.fieldName}
-                                           fieldSize={cultivate.fieldSize}
-                                           fieldAddress={cultivate.fieldAddress}
-                                           cultivated={true}
+                            (cultivated.map((cultivate, index) => (
+                                <FieldCard key={index}
+                                       cultivateData={cultivate}
+                                       cultivated={true}
+                                       onFieldClick={handleFieldClick}
                                 />
                             )))
                         }

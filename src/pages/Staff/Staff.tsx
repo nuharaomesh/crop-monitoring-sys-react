@@ -20,7 +20,8 @@ import StaffModel from "../../models/Staff.ts";
 import {useEffect, useState} from "react";
 import {AppDispatch, RootState} from "../../store/Store.ts";
 import {Outlet} from "react-router-dom";
-import { getAllVehicles, getVehicleCount } from "../../reducers/VehicleSlice.ts";
+import { getVehicleCount } from "../../reducers/VehicleSlice.ts";
+import { getStaffCount } from "../../reducers/StaffSlice.ts";
 
 const chartConfig = {} satisfies ChartConfig
 interface vehicleGraphData {
@@ -36,17 +37,18 @@ interface staffGraphData {
 
 export default function Staff() {
 
-    const dispatch = useDispatch<AppDispatch>()    
+    const dispatch = useDispatch<AppDispatch>()
+    const vehicleList = useSelector(state => state.vehicle.vehicleList)
+    const staffList = useSelector(state => state.staff.staffList)
     useEffect(() => {
         dispatch(getVehicleCount())
-    }, [dispatch])
-
+        dispatch(getStaffCount())
+    }, [dispatch, vehicleList, staffList])
     const [vehicleGraphData, setVehicleGraphData] = useState<vehicleGraphData []>([])
     const [staffGraphData, setStaffGraphData] = useState<staffGraphData []>([])
     const vehicles = useSelector((state: RootState) => state.vehicle.vehicleCountList)
-    const vehicleList = useSelector(state => state.vehicle.vehicleList)
-    const staffs: StaffModel[] = useSelector((state: RootState): StaffModel[] => state.staff)
-
+    const staffs = useSelector((state: RootState) => state.staff.staffCountList)
+    
     useEffect(() => {    
         setVehicleGraphData(
             vehicles.map((v , index: number)=> ({
@@ -59,7 +61,7 @@ export default function Staff() {
         setStaffGraphData(
             staffs.map((s: StaffModel, index: number)=> ({
                 staff: s.role,
-                count: 10,
+                count: s._count.role,
                 fill: `${index % 2 === 0 ? "#2563eb" : "#60a5fa" }`
             }))
         )
