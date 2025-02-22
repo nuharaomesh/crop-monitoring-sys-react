@@ -1,59 +1,13 @@
 import { Calendar } from "../components/ui/calendar"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "../components/ui/table"
-
-const invoices = [
-    {
-        invoice: "INV001",
-        paymentStatus: "Paid",
-        totalAmount: "$250.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV002",
-        paymentStatus: "Pending",
-        totalAmount: "$150.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV003",
-        paymentStatus: "Unpaid",
-        totalAmount: "$350.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV004",
-        paymentStatus: "Paid",
-        totalAmount: "$450.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV005",
-        paymentStatus: "Paid",
-        totalAmount: "$550.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV006",
-        paymentStatus: "Pending",
-        totalAmount: "$200.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV007",
-        paymentStatus: "Unpaid",
-        totalAmount: "$300.00",
-        paymentMethod: "Credit Card",
-    },
-]
 
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
@@ -69,6 +23,11 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "../components/ui/chart"
+import {TableContainer} from "@mui/material";
+import CropModel from "../models/Crop.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch} from "../store/Store.ts";
+import {getAllCrops} from "../reducers/CropSlice.ts";
 const chartData = [
     { month: "January", desktop: 186, mobile: 80 },
     { month: "February", desktop: 305, mobile: 200 },
@@ -76,6 +35,12 @@ const chartData = [
     { month: "April", desktop: 73, mobile: 190 },
     { month: "May", desktop: 209, mobile: 130 },
     { month: "June", desktop: 214, mobile: 140 },
+    { month: "July", desktop: 214, mobile: 140 },
+    { month: "August", desktop: 214, mobile: 140 },
+    { month: "September", desktop: 54, mobile: 140 },
+    { month: "October", desktop: 24, mobile: 140 },
+    { month: "November", desktop: 14, mobile: 140 },
+    { month: "December", desktop: 214, mobile: 140 },
 ]
 const chartConfig = {
     desktop: {
@@ -89,12 +54,19 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Dashboard() {
-    const [date, setDate] = useState<Date | undefined>(new Date())
 
+    const [date, setDate] = useState<Date | undefined>(new Date())
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+        dispatch(getAllCrops())
+    }, []);
+    const crops = useSelector(state => state.crop.cropList)
+    
     return (
         <main className="main-border dashboard-container">
             <div className="dashboard-left">
                 <div className="graph-and-progress">
+
                     <div className="dashboard-graph">
                         <div>
                             <Card>
@@ -103,8 +75,8 @@ export default function Dashboard() {
                                     <CardDescription>January - June 2024</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <ChartContainer config={chartConfig}>
-                                        <BarChart accessibilityLayer data={chartData}>
+                                    <ChartContainer config={chartConfig} style={{ height: 220, width: '100%'}}>
+                                        <BarChart accessibilityLayer data={chartData} height={100}>
                                             <CartesianGrid vertical={false} />
                                             <XAxis
                                                 dataKey="month"
@@ -137,42 +109,62 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="dashboard-task custom-layout">
-                    <Table>
-                        <TableCaption>A list of your recent invoices.</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">Invoice</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Method</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {invoices.map((invoice) => (
-                                <TableRow key={invoice.invoice}>
-                                    <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                                    <TableCell>{invoice.paymentStatus}</TableCell>
-                                    <TableCell>{invoice.paymentMethod}</TableCell>
-                                    <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                    <TableContainer style={{maxHeight: 490}}>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[100px]">Crop name</TableHead>
+                                    <TableHead>Growth time</TableHead>
+                                    <TableHead>Category</TableHead>
+                                    <TableHead className="text-right">Market price</TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {crops.map((c: CropModel, index: number) => (
+                                    <TableRow key={index}>
+                                        <TableCell className="font-medium">{c.cropName}</TableCell>
+                                        <TableCell>{c.cropGrowthTime}</TableCell>
+                                        <TableCell>{c.category}</TableCell>
+                                        <TableCell className="text-right text-green-500">$ {c.price} </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </div>
             </div>
             <div className="dashboard-right">
                 <div className="dashboard-calender custom-layout">
-
+                    chat box
                 </div>
                 <div className="business-progress custom-layout">
-
+                    circle analyzes
                 </div>
                 <div className="dashboard-right-bottom">
                     <div className="monthly-task custom-layout">
+                        <h1 className="card-title !text-20p !text-gray-100 mb-7">Per month</h1>
+                        <div className="monthly-task-header">
+                            <div className="projects-count-stat">
+                                <h1 id="count-stat" className="list-title !text-gray-100">9+</h1>
+                                <label htmlFor="count-stat" className="card-label !text-gray-100">Projects</label>
+                            </div>
+                            <div className="project-month-stat">
 
+                            </div>
+                        </div>
+                        <hr className="border border-gray-600"/>
+                        <div className="monthly-task-body mt-6">
+                            <div className="projects-count-stat">
+                                <h1 id="count-stat" className="list-title !text-gray-100">20+</h1>
+                                <label htmlFor="count-stat" className="card-label !text-gray-100">Cultivations</label>
+                            </div>
+                            <div className="project-month-stat">
+
+                            </div>
+                        </div>
                     </div>
                     <div className="blank custom-layout">
-
+                        whether
                     </div>
                 </div>
             </div>
