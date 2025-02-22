@@ -106,7 +106,7 @@ You can customize the application by:
 
 1. ### Clone the Repository
 ```bash
-    git clone https://github.com/your-username/frontend-repo.git
+    git clone https://github.com/nuharaomesh/crop-monitoring-sys-react.git
     cd frontend-repo
 ```
 
