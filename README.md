@@ -93,10 +93,32 @@ You can customize the application by:
 - Adding new features with Redux slices in the `src/reducers` folder.
 
 ## Future Improvements
-- Add user authentication and authorization.
-- Implement a dashboard for visualizing crop growth trends.
 - Integrate real-time weather data for better monitoring.
 - Add support for notifications and reminders.
+
+## Installation & Setup
+
+### Prerequisites
+
+#### Make sure you have the following installed:
+- Node.js (Recommended: Latest LTS version)
+- npm 
+
+1. ### Clone the Repository
+```bash
+    git clone https://github.com/your-username/frontend-repo.git
+    cd frontend-repo
+```
+
+2. ### Install Dependencies
+```bash
+    npm install
+```
+
+3. ### Run the Project
+```bash
+    npm run dev
+```
 
 ## License
 This project is licensed under the [MIT License](Licence).
