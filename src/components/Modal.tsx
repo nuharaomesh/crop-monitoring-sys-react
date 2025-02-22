@@ -1,14 +1,22 @@
 import StaffCard from "./Cards/StaffCard.tsx";
-import {useSelector} from "react-redux";
-import {Crop} from "../models/Crop.ts";
-import {Staff} from "../models/Staff.ts";
+import {useDispatch, useSelector} from "react-redux";
+import CropModel from "../models/Crop.ts";
+import StaffModel from "../models/Staff.ts";
 import CropCardRow from "./Cards/CropCardRow.tsx";
+import {useEffect} from "react";
+import {getAllCrops} from "../reducers/CropSlice.ts";
+import {getAllStaffs} from "../reducers/StaffSlice.ts";
+import {AppDispatch} from "../store/Store.ts";
 
 export default function Modal(props) {
 
-    const crops = useSelector(state => state.crop)
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+        props.modalType?.startsWith('crop') ? dispatch(getAllCrops()) : dispatch(getAllStaffs())
+    }, []);
+    const crops = useSelector(state => state.crop.cropList)
     const staffs = useSelector(state =>
-        state.staff.filter((staff: Staff)=> !props.selectedStaff.includes(staff.staffID))
+        state.staff.staffList.filter((staff: StaffModel)=> !props.selectedStaff.includes(staff.staffID))
     )
 
     return (
@@ -18,7 +26,7 @@ export default function Modal(props) {
                 <p className="mb-4">{props.modalType?.startsWith('crop') ? 'Add crop type' : 'Select staff members.'}</p>
                 <div className="staff-crop-holder custom-list-row">
                     {props.modalType?.startsWith('crop') ?
-                        (crops.map((c: Crop) => (
+                        (crops.map((c: CropModel) => (
                                 <CropCardRow key={c.cropCode}
                                              crop={c}
                                              setCropCode={props.getCropCode}
@@ -26,13 +34,13 @@ export default function Modal(props) {
                                 />
                             ))
                         ) :
-                        (staffs.map((s: Staff) => (
+                        (staffs.map((s: StaffModel) => (
                             <StaffCard key={s.staffID}
                                        staffID={s.staffID}
                                        assignable={true}
                                        setStaffID={props.getStaffID}
-                                       img={s.staffImg}
-                                       name={`${s.firstname} ${s.lastname}`}
+                                       img={s.img}
+                                       name={s.name}
                                        role={s.role}
                                        stat={s.status}
                                        phone={s.phone}
