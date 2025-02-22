@@ -4,15 +4,14 @@ import StaffCard from "../Cards/StaffCard.tsx";
 import Modal from "../Modal.tsx";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Crop} from "../../models/Crop.ts";
-import {FaDeleteLeft} from "react-icons/fa6";
+import CropModel from "../../models/Crop.ts";
+import {FaArrowLeft, FaDeleteLeft} from "react-icons/fa6";
 import Staff from "../../models/Staff.ts";
 import {Cultivate} from "../../models/Cultivate.ts";
 import {useNavigate, useParams} from "react-router-dom";
-import generateID from "../../util/GenerateID.ts";
-import {add_cultivation} from "../../reducers/CultivatedSlice.ts";
-import {Field} from "../../models/Field.ts";
-import {RootState} from "../../store/Store.ts";
+import {saveCultivation} from "../../reducers/CultivatedSlice.ts";
+import FieldModel from "../../models/Field.ts";
+import {AppDispatch, RootState} from "../../store/Store.ts";
 
 export default function CultivateForm() {
 
@@ -22,17 +21,25 @@ export default function CultivateForm() {
     const [isCropSelected, setIsCropSelected] = useState<boolean>(false)
     const [selectedModalType, setSelectedModalType] = useState<'staff' | 'crop'>('crop')
     const { id } = useParams<{id: string}>()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const selectedField = useSelector((state: RootState) =>
-        state.field.find((f: Field)=> f.fieldCode === id)
+        state.field.fieldList.find((f: FieldModel)=> f.fieldCode === id)
     )
     const selectedCrop = useSelector((state: RootState) =>
-        state.crop.find((c: Crop) => c.cropCode === cropCode)
+        state.crop.cropList.find((c: CropModel) => c.cropCode === cropCode)
     )
     const filteredStaff = useSelector((state: RootState) =>
-        state.staff.filter((staff: Staff) => staffs.includes(staff.staffID))
+        state.staff.staffList.filter((staff: Staff) => staffs.includes(staff.staffID))
     )
+    const [preFieldImg, setPreFieldImg] = useState("")
+    const [preCropImg, setPreCropImg] = useState("")
+    useEffect(() => {
+        setPreFieldImg(`data:image/jpeg;base64,${selectedField?.img}`)
+    }, [selectedField])
+    useEffect(() => {
+        setPreCropImg(`data:image/jpeg;base64,${selectedCrop?.img}`)
+    }, [selectedCrop]);
 
     function assignStaff(id: string) {
         setStaffs([...staffs, id])
@@ -56,9 +63,9 @@ export default function CultivateForm() {
         setIsModalOpen(false)
     }
     function handleSubmit() {
-        const genCultivateID = generateID('CULTIVATE')
-        const newCultivate = new Cultivate(genCultivateID, cropCode, String(id), staffs)
-        dispatch(add_cultivation({...newCultivate}))
+        const newCultivate = new Cultivate(cropCode, String(id), staffs)
+        console.log("cultivated:", newCultivate)
+        dispatch(saveCultivation({...newCultivate}))
         navigate('/activity')
     }
 
@@ -70,13 +77,17 @@ export default function CultivateForm() {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, []);
 
+    function handleBack() {
+        navigate("/activity")
+    }
     return (
         <section className="modal py-5">
             <div className={`modal-content cultivate-modal-content`}>
                 <div className="cultivate-modal-content-body">
+                    <button className="custom-back-btn" onClick={handleBack}><FaArrowLeft /></button>
                     <div className="field-details-holder">
                         <div className="field-details-img-holder">
-                            <img src={String(selectedField?.fieldImg)} alt="" className="field-details-img"/>
+                            <img src={preFieldImg} alt="" className="field-details-img"/>
                         </div>
                         <div className="field-details">
                             <h1 className="card-title">{selectedField?.fieldName}</h1>
@@ -86,7 +97,7 @@ export default function CultivateForm() {
                     </div>
                     <div className="crop-details-holder relative group">
                         <div className="crop-details-img-holder">
-                            <img src={isCropSelected ? String(selectedCrop?.cropImg) : "../../../public/images.png" } alt="" className="crop-details-img"/>
+                            <img src={isCropSelected ? preCropImg : "../../../public/images.png" } alt="" className="crop-details-img"/>
                         </div>
                         <div className="crop-details">
                             <div>

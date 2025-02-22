@@ -1,7 +1,12 @@
 import {BiSolidMessageSquareAdd} from "react-icons/bi";
+import {useEffect, useState} from "react";
 
 export default function CropCardRow(props) {
 
+    const [preImg, setPreImg] = useState("")
+    useEffect(() => {
+        setPreImg(`data:image/jpeg;base64,${props.crop.img}`)
+    }, [])
     function assignCrop() {
         props.setCropCode(props.crop.cropCode)
         props.selectOnClose()
@@ -10,7 +15,7 @@ export default function CropCardRow(props) {
     return (
         <div className="crop-card-row relative group">
             <div className="card-row-header">
-                <img src={props.crop.cropImg}
+                <img src={preImg}
                      alt="Staff Profile"
                      className="w-full h-full object-cover"
                 />

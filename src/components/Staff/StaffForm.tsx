@@ -18,8 +18,11 @@ const validationSchema = Yup.object({
 
 export default function StaffForm(props) {
 
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [isVisible, setIsVisible] = useState(false)
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [existImg, setExistImg] = useState("")
     const {
         register,
         handleSubmit,
@@ -43,6 +46,12 @@ export default function StaffForm(props) {
         }, 300);
     }
 
+    useEffect(() => {
+        if (props.title.startsWith("Update")) {
+            setExistImg(`data:image/jpeg;base64,${props.staff.img}`)
+        }
+    }, [])
+
     const onSubmit = (data: any) => console.log(data);
 
     const handleSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +62,7 @@ export default function StaffForm(props) {
         const file = event.target.files?.[0];
         if (file) {
             const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
+            setImagePreview(previewUrl);    
             props.setStaffImage(file)
         }
     };
@@ -68,6 +77,14 @@ export default function StaffForm(props) {
             }
         }, 300);
     }
+
+    useEffect(() => {
+        if (props.title.startsWith("Update")) {
+            const [newFirstName, newLastName] = props.staff.name.split(" ")
+            setFirstName(newFirstName)
+            setLastName(newLastName)
+        }
+    }, [])
 
     return (
         <div className="modal">
@@ -92,7 +109,7 @@ export default function StaffForm(props) {
                                 <img src={imagePreview} alt="Crop Preview" className="item-image"/>
                             ) : (
                                 <img
-                                    src={props.title?.startsWith("Update") ? props.staff.staffImg : "../../../public/images.png"}
+                                    src={props.title?.startsWith("Update") ? existImg : "../../../public/images.png"}
                                     alt="staff Image"
                                     className="item-image"
                                 />
@@ -104,7 +121,7 @@ export default function StaffForm(props) {
                                    placeholder="Enter staff first name"
                                    {...register("first_name")}
                                    onChange={(e) => props.setFirstname(e.target.value)}
-                                   defaultValue={props.title?.startsWith("Update") ? props.staff.firstname : props.firstname}
+                                   defaultValue={props.title?.startsWith("Update") ? firstName : props.firstname}
                             />
                             {errors.first_name?.message && <p className="form-error">{errors.first_name?.message} <TiWarning color="red" /></p>}
                         </div>
@@ -114,7 +131,7 @@ export default function StaffForm(props) {
                                    placeholder="Enter staff last name"
                                    {...register("last_name")}
                                    onChange={(e) => props.setLastname(e.target.value)}
-                                   defaultValue={props.title?.startsWith("Update") ? props.staff.lastname : props.lastname}
+                                   defaultValue={props.title?.startsWith("Update") ? lastName : props.lastname}
                             />
                             {errors.last_name?.message && <p className="form-error">{errors.last_name?.message} <TiWarning color="red" /></p>}
                         </div>

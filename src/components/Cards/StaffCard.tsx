@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function StaffCard(props) {
 
     let content
-    const [preImg, setPreImg] = useState("")
+    const [preImg, setPreImg] = useState(`data:image/jpeg;base64,${props.img}`)
 
     function assignStaff() {
         props.setStaffID(props.staffID)
@@ -37,7 +37,7 @@ export default function StaffCard(props) {
             <div className="staff-card-img w-12 h-12 flex-shrink-0 rounded-full overflow-hidden">
                 <img
                     src={preImg}
-                    alt="Staff Profile"
+                    alt="Staff img"
                     className="w-full h-full object-cover"
                 />
             </div>

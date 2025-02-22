@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
 export default function FieldForm(props) {
 
     const [isVisible, setIsVisible] = useState(false)
-
+    const [existImg, setExistImg] = useState("")
     useEffect(() => {
         setTimeout(() => {
             setIsVisible(true)
@@ -38,7 +38,8 @@ export default function FieldForm(props) {
         if (file) {
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
-            props.setFieldImg(previewUrl)
+            props.setFieldImg(file)
+            console.log("file",file);
         }
     };
 
@@ -71,6 +72,12 @@ export default function FieldForm(props) {
         }, 300);
     }
 
+    useEffect(() => {
+        if (props.title.startsWith("Update")) {
+            setExistImg(`data:image/jpeg;base64,${props.field.img}`)
+        }
+    }, [])
+
     return (
         <div className="modal">
             <form onSubmit={handleSubmit(onSubmit)} className="form-border">
@@ -92,7 +99,7 @@ export default function FieldForm(props) {
                             {imagePreview ? (
                                 <img src={imagePreview} alt="Added Field" className="item-image"/>
                             ) : (
-                                <img src={props.title?.startsWith("Update") ? props.field.fieldImg : "../../../public/images.png"} alt="Added Field" id="addedFieldImg" className="item-image"/>
+                                <img src={props.title?.startsWith("Update") ? existImg : "../../../public/images.png"} alt="Added Field" id="addedFieldImg" className="item-image"/>
                             )}
                         </div>
                         <div>

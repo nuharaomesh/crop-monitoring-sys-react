@@ -10,12 +10,14 @@ const validationSchema = Yup.object({
     crop_scientific_name: Yup.string().required("Crop scientific name is required"),
     crop_season: Yup.string().required("Crop season is required"),
     crop_category: Yup.string().required("Crop category is required"),
-    crop_growth_time: Yup.string().required("Crop growth time is required")
+    crop_growth_time: Yup.string().required("Crop growth time is required"),
+    crop_price: Yup.number().required("Crop price is required"),
 });
 
 export default function CropForm(props) {
     const [isVisible, setIsVisible] = useState(false)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
+    const [existImg, setExistImg] = useState("")
     const {
         register,
         handleSubmit,
@@ -28,10 +30,14 @@ export default function CropForm(props) {
         if (file) {
             const previewUrl = URL.createObjectURL(file)
             setImagePreview(previewUrl)
-            props.setCropImage(previewUrl)
+            console.log(typeof file)
+            props.setCropImage(file)
         }
     };
-
+    useEffect(() => {
+        if (props.title.startsWith("Update"))
+            setExistImg(`data:image/jpeg;base64,${props.crop.img}`)
+    }, [])
     useEffect(() => {
         setTimeout(() => {
             setIsVisible(true)
@@ -79,7 +85,8 @@ export default function CropForm(props) {
                             {imagePreview ? (
                                 <img src={imagePreview} alt="Crop Preview" className="item-image"/>
                             ) : (
-                                <img src={props.title?.startsWith("Update") ? props.crop.cropImg : "../../../public/images.png"} alt="Crop Image" className="item-image"
+                                <img src={props.title?.startsWith("Update") ? existImg : "../../../public/images.png"}
+                                     alt="Crop Image" className="item-image"
                                 />
                             )}
                         </div>
@@ -91,7 +98,8 @@ export default function CropForm(props) {
                                    onChange={(e) => props.setCropName(e.target.value)}
                                    defaultValue={props.title?.startsWith("Update") ? props.crop.cropName : props.cropName}
                             />
-                            {errors.crop_name?.message && <p className="form-error">{errors.crop_name?.message} <TiWarning color="red" /></p>}
+                            {errors.crop_name?.message &&
+                                <p className="form-error">{errors.crop_name?.message} <TiWarning color="red"/></p>}
                         </div>
                         <div>
                             <label htmlFor="crop_scientific_name" className="form-label">Scientific Name</label>
@@ -100,7 +108,9 @@ export default function CropForm(props) {
                                    placeholder="Scientific name"
                                    defaultValue={props.title?.startsWith("Update") ? props.crop.cropScientificName : props.cropScientificName}
                                    onChange={(e) => props.setCropScientificName(e.target.value)}/>
-                            {errors.crop_scientific_name?.message && <p className="form-error">{errors.crop_scientific_name?.message} <TiWarning color="red" /></p>}
+                            {errors.crop_scientific_name?.message &&
+                                <p className="form-error">{errors.crop_scientific_name?.message} <TiWarning
+                                    color="red"/></p>}
                         </div>
                         <div>
                             <label htmlFor="crop_image" className="form-label">Crop Image</label>
@@ -109,20 +119,24 @@ export default function CropForm(props) {
                         </div>
                         <div>
                             <label htmlFor="crop_season" className="form-label">Crop Season</label>
-                            <input className="form-control" list="cropSeasons" placeholder="Select Season" id="crop_season"
+                            <input className="form-control" list="cropSeasons" placeholder="Select Season"
+                                   id="crop_season"
                                    {...register("crop_season")}
                                    defaultValue={props.title?.startsWith("Update") ? props.crop.cropSeason : props.cropSeason}
                                    onChange={(e) => props.setCropSeason(e.target.value)}/>
                             <datalist id="cropSeasons">
-                                <option value="Spring"></option>
-                                <option value="Summer"></option>
-                                <option value="Fall"></option>
+                                <option value="FALL">Fall</option>
+                                <option value="WINTER">Winter</option>
+                                <option value="SPRING">Spring</option>
+                                <option value="SUMMER">Summer</option>
                             </datalist>
-                            {errors.crop_season?.message && <p className="form-error">{errors.crop_season?.message} <TiWarning color="red" /></p>}
+                            {errors.crop_season?.message &&
+                                <p className="form-error">{errors.crop_season?.message} <TiWarning color="red"/></p>}
                         </div>
                         <div>
                             <label htmlFor="crop_category" className="form-label">Crop Category</label>
-                            <input className="form-control" list="cropCategories" placeholder="Select Category" id="crop_category"
+                            <input className="form-control" list="cropCategories" placeholder="Select Category"
+                                   id="crop_category"
                                    {...register("crop_category")}
                                    defaultValue={props.title?.startsWith("Update") ? props.crop.category : props.category}
                                    onChange={(e) => props.setCropCategories(e.target.value)}/>
@@ -131,25 +145,39 @@ export default function CropForm(props) {
                                 <option value="Vegetables"></option>
                                 <option value="Grains"></option>
                             </datalist>
-                            {errors.crop_category?.message && <p className="form-error">{errors.crop_category?.message} <TiWarning color="red" /></p>}
+                            {errors.crop_category?.message &&
+                                <p className="form-error">{errors.crop_category?.message} <TiWarning color="red"/></p>}
+                        </div>
+                        <div>
+                            <label htmlFor="crop_price" className="form-label">Crop Price</label>
+                            <input className="form-control" placeholder="Add a price"
+                                   id="crop_price"
+                                   {...register("crop_price")}
+                                   defaultValue={props.title?.startsWith("Update") ? props.crop.price : props.price}
+                                   onChange={(e) => props.setCropPrice(e.target.value)}/>
+                            {errors.crop_price?.message &&
+                                <p className="form-error">{errors.crop_price?.message} <TiWarning color="red"/></p>}
                         </div>
                         <div>
                             <label htmlFor="crop_growth_time" className="form-label">Growth Time</label>
-                            <input className="form-control" list="cropGrowthTimes" placeholder="Select Growth Time" id="crop_growth_time"
+                            <input className="form-control" list="cropGrowthTimes" placeholder="Select Growth Time"
+                                   id="crop_growth_time"
                                    {...register("crop_growth_time")}
                                    defaultValue={props.title?.startsWith("Update") ? props.crop.cropGrowthTime : props.cropGrowthTime}
                                    onChange={(e) => props.setCropGrowthTime(e.target.value)}/>
                             <datalist id="cropGrowthTimes">
-                                <option value="Short-term"></option>
-                                <option value="Medium-term"></option>
-                                <option value="Long-term"></option>
+                                <option value="SHORT_TERM">Short-term</option>
+                                <option value="LONG_TERM">Long-term</option>
                             </datalist>
-                            {errors.crop_growth_time?.message && <p className="form-error">{errors.crop_growth_time?.message} <TiWarning color="red" /></p>}
+                            {errors.crop_growth_time?.message &&
+                                <p className="form-error">{errors.crop_growth_time?.message} <TiWarning color="red"/>
+                                </p>}
                         </div>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="cancel-button" onClick={handleCancelClick}>Cancel</button>
-                        <button type="button" className="save-button" onClick={handleSubmitClick}>{props.children}</button>
+                        <button type="button" className="save-button"
+                                onClick={handleSubmitClick}>{props.children}</button>
                     </div>
                 </div>
             </form>

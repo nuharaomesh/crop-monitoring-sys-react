@@ -1,12 +1,19 @@
 import {AiFillPushpin, AiOutlineExpand} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import {BsFillPenFill} from "react-icons/bs";
+import {useEffect, useState} from "react";
 
 export default function UncultivatedCard(props) {
+
+    const [preImg, setPreImg] = useState("")
+    useEffect(() => {
+        setPreImg(`data:image/jpeg;base64,${props.img}`)
+    }, [])
+
     return (
         <div className="uncult-card relative group">
             <div className="uncult-card-header">
-                <img src={props.img} alt="" className="uncult-card-header-img"/>
+                <img src={preImg} alt="" className="uncult-card-header-img"/>
             </div>
             <div className="uncult-card-body">
                 <div className="uncult-card-name-holder">

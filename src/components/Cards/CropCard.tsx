@@ -1,12 +1,19 @@
 import { BsFillPenFill } from "react-icons/bs";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 export default function CropCard(props) {
+
+    const [preImg, setPreImg] = useState("")
+    useEffect(() => {
+        setPreImg(`data:image/jpeg;base64,${props.cropImg}`)
+    }, [])
+
     return (
         <div className="crop-card relative group">
             <div className="crop-card-header">
                 <div className="crop-card-img-holder">
-                    <img src={props.cropImg} alt="" className="crop-card-img"/>
+                    <img src={preImg} alt="" className="crop-card-img"/>
                 </div>
                 <div
                     className="absolute right-8 top-44 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
