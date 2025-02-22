@@ -1,5 +1,5 @@
 import './index.css'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import MainLayout from "./components/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Activity from "./pages/Activity.tsx";
@@ -16,17 +16,19 @@ import AddStaff from "./pages/Staff/AddStaff.tsx";
 import UpdateStaff from "./pages/Staff/UpdateStaff.tsx";
 import AddVehicle from "./pages/Vehicle/AddVehicle.tsx";
 import UpdateVehicle from "./pages/Vehicle/UpdateVehicle.tsx";
-import AddEquipment from "./pages/Equipment/AddEquipment.tsx";
-import UpdateEquipment from "./pages/Equipment/UpdateEquipment.tsx";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx";
+import { useSelector } from 'react-redux';
 
 function App() {
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
     const routes = createBrowserRouter([
         {
             path: '',
-            element: <MainLayout/>,
+            element: isAuthenticated ? <MainLayout/> : <Navigate to={'/login'}/> ,
             children: [
-                { path: '/', element: <Dashboard/> },
+                { path: '', element: <Dashboard/> },
                 { path: '/activity', element: <Activity/>, children: [
                         { path: '/activity/addCultivate/:id', element: <CultivateForm/> }
                     ]
@@ -46,20 +48,17 @@ function App() {
                         { path: '/staff/updateStaff/:id', element: <UpdateStaff/> },
                         { path: '/staff/addVehicle', element: <AddVehicle/>},
                         { path: '/staff/updateVehicle/:id', element: <UpdateVehicle/>},
-                        { path: '/staff/addEquipment', element: <AddEquipment/>},
-                        { path: '/staff/updateEquipment/:id', element: <UpdateEquipment/>},
                     ]
                 },
                 { path: '/insights', element: <Insights/> },
             ]
-        }
+        },
+        { path: "/login", element: <Login/>},
+        { path: "/signup", element: <Signup/>},
     ])
 
-    return (
-        <>
-            <RouterProvider router={routes} />
-        </>
-    )
+    return <RouterProvider router={routes} />
+
 }
 
 export default App
