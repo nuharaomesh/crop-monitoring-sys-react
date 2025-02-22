@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import React, {useState} from "react";
 import CropModel from "../../models/Crop.ts";
 import {saveCrop} from "../../reducers/CropSlice.ts";
-import generateID from "../../util/GenerateID.ts";
+import utility from "../../util/utility.ts";
 import { AppDispatch } from "../../store/Store.ts";
 
 export default function AddCrop() {
@@ -23,7 +23,7 @@ export default function AddCrop() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(cropName === "" || cropScientificName === "" || cropCategories === "" || cropSeason === "" || cropGrowthTime === "")) {
-            const genCropCode = generateID("CROP")
+            const genCropCode = utility("CROP")
             const newCrop = new CropModel(genCropCode, cropName, cropScientificName, cropCategories, cropSeason, cropGrowthTime, cropPrice, cropImage)
             dispatch(saveCrop({...newCrop}))
             setTimeout(() => {

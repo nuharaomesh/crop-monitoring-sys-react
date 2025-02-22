@@ -6,7 +6,7 @@ import CropModel from "../../models/Crop.ts";
 import {updateCrop, deleteCrop} from "../../reducers/CropSlice.ts";
 import Swal from "sweetalert2";
 import { AppDispatch } from "../../store/Store.ts";
-import {base64ToFile} from "../../util/GenerateID.ts";
+import {base64ToFile} from "../../util/utility.ts";
 
 export default function UpdateCrop() {
 

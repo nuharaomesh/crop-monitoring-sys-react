@@ -1,7 +1,7 @@
 import StaffForm from "../../components/Staff/StaffForm.tsx";
 import React, {useState} from "react";
 import Staff from "../../models/Staff.ts";
-import generateID from "../../util/GenerateID.ts";
+import utility from "../../util/utility.ts";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {saveStaff} from "../../reducers/StaffSlice.ts";
@@ -27,7 +27,7 @@ export default function AddStaff() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(firstname === "" || lastname === "" || dob === "" || joinedDate === "" || address === "" || phone === "" || email === "" || role === "")) {
-            const genStaffID = generateID("STAFF")
+            const genStaffID = utility("STAFF")
             const newStaff = new Staff(genStaffID, `${firstname + " " + lastname}`, gender, email, role, address, joinedDate, dob, "ACTIVE", Number(phone), staffImg, status)
             dispatch(saveStaff({...newStaff}))
             setTimeout(() => {

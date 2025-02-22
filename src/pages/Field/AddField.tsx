@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import React, {useState} from "react";
 import FieldModel from "../../models/Field.ts";
 import {saveField} from "../../reducers/FieldSlice.ts";
-import generateID from "../../util/GenerateID.ts";
+import utility from "../../util/utility.ts";
 import { AppDispatch } from "../../store/Store.ts";
 
 export default function AddField() {
@@ -23,7 +23,7 @@ export default function AddField() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(fieldName === "" || fieldAddress === "" || latitude === 0 || longitude === 0 || fieldSize === "")) {
-            const genFieldCode = generateID("FIELD")
+            const genFieldCode = utility("FIELD")
             const fieldLocation = `${latitude}, ${longitude}`
             const newField = new FieldModel(genFieldCode, fieldName, fieldAddress, fieldLocation.toString(), fieldSize, fieldImg, isCultivated)
             dispatch(saveField({...newField}))

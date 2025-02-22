@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import FieldModel from "../../models/Field.ts";
 import {updateField, deleteField} from "../../reducers/FieldSlice.ts";
 import { AppDispatch } from "../../store/Store.ts";
-import { base64ToFile } from "../../util/GenerateID.ts";
+import { base64ToFile } from "../../util/utility.ts";
 import Swal from "sweetalert2";
 
 export default function UpdateField() {

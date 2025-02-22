@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import Vehicle from "../../models/Vehicle.ts";
-import generateID from "../../util/GenerateID.ts";
+import utility from "../../util/utility.ts";
 import {saveVehicle} from "../../reducers/VehicleSlice.ts";
 import { AppDispatch } from "../../store/Store.ts";
 
@@ -21,7 +21,7 @@ export default function AddVehicle() {
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         if (!(licenseNumber === "" || vehicleType === "" || fuelType === "" || remarks === "" || status === "")) {
-            const genVehicleID = generateID("VEHICLE")
+            const genVehicleID = utility("VEHICLE")
             const newVehicle = new Vehicle(genVehicleID, licenseNumber, vehicleType, fuelType, remarks, status)
             dispatch(saveVehicle({...newVehicle}))
             setTimeout(() => {
